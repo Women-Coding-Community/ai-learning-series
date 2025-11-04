@@ -140,19 +140,6 @@ When reviewing peer submissions:
 
 ---
 
-## Badge Display
-
-### In Your GitHub Profile
-
-Add to your README:
-
-```markdown
-## 🎓 WCC AI Learning Badges
-
-[![AI Fundamentals](https://img.shields.io/badge/WCC-AI%20Fundamentals-blue)](https://github.com/Women-Coding-Community/ai-learning-series)
-[![Prompt Engineering](https://img.shields.io/badge/WCC-Prompt%20Engineering-green)](https://github.com/Women-Coding-Community/ai-learning-series)
-```
-
 ### On LinkedIn
 
 Add to your profile:
@@ -190,12 +177,12 @@ A: Forever! They're part of your learning journey.
 
 | Session | Date | Topic | Submission Deadline |
 |---------|------|-------|---------------------|
-| 1 | Nov 5 | AI Fundamentals & LLM APIs | Nov 19 |
-| 2 | Nov 19 | Prompt Engineering & Security | Dec 3 |
-| 3 | Dec 3 | Introduction to RAG | Dec 17 |
-| 4 | Dec 17 | AI Agents - Part 1 | Jan 7 |
-| 5 | Jan 7 | AI Agents - Part 2 | Jan 21 |
-| 6 | Jan 21 | Evaluation & Monitoring | Feb 4 |
+| 1 | Nov 5  | AI Fundamentals & LLM APIs | Nov 19 |
+| 2 | Nov 12 | Prompt Engineering | Dec 3 |
+| 3 | Nov 19 | Introduction to RAG | Dec 17 |
+| 4 | Nov 26 | AI Agents - Part 1 | Jan 7 |
+| 5 | Dec 3  | AI Agents - Part 2 | Jan 21 |
+| 6 | Dec 10 | Evaluation & Monitoring | Feb 4 |
 
 **Foundational Track Badge:** Complete all 6 sessions + submit 2+ projects by Feb 4
 
