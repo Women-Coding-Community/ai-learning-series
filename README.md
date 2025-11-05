@@ -74,7 +74,7 @@ Welcome to the **WCC AI Learning Series**! This repository contains hands-on res
 ## 📁 Repository Structure
 
 ```text
-wcc-ai-learning-2025/
+ai-learning-series/
 ├── README.md                          # This file
 ├── getting-started/                   # Setup guides
 │   ├── gcp-setup.md
