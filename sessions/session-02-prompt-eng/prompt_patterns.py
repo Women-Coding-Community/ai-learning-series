@@ -11,8 +11,7 @@ class PromptPatterns:
         PATTERN 1: ZERO-SHOT PROMPTING
         Simple instruction without examples
         """
-        return f"""You are a helpful assistant for Women Coding Community (WCC).
-        Answer questions about programs and events.
+        return f"""What is Women Coding Community (WCC)?
 
         Member Question: {user_query}
 

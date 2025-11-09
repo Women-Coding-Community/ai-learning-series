@@ -30,7 +30,7 @@ def compare_all_patterns():
         # response = SecureWCCChatbot(pattern_type=pattern_type)
         response = NoSecureWCCChatbot(pattern_type=pattern_type).process_message(query)['response']
         
-        # Show first 300 chars
+        # Show first 500 chars
         preview = response[:500] + "..." if len(response) > 500 else response
         print(f"\n{preview}")
         
