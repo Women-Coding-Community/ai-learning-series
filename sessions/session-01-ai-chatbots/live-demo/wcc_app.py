@@ -1,21 +1,18 @@
 #!/usr/bin/env python3
 """
 WCC AI Learning Series - Session 1 Live Demo
-Progressive Chatbot Building - Uncomment sections step by step!
+Progressive Chatbot Building - Modular Approach
 
 INSTRUCTIONS FOR LIVE DEMO:
-1. Start with SECTION 1 (already active)
-2. To activate SECTION 2: Delete the triple quotes
-3. To activate SECTION 3: Delete the triple quotes
-4. To activate SECTION 4: Delete the triple quotes
-5. To activate SECTION 5: Delete the triple quotes
+Comment/uncomment method calls at the bottom to show each step:
 
-Demo Flow:
-1. Basic API call (START HERE - ACTIVE)
-2. Add personality with system prompt (SECTION 2)
-3. Add conversation memory (SECTION 3)
-4. Explore model parameters (SECTION 4)
-5. Create web interface (SECTION 5)
+Step 1: step_1_basic_api_call()
+Step 2: step_2_add_personality()
+Step 3: step_3_conversation_memory()
+Step 4: step_4_model_parameters()
+Step 5: step_5_streamlit_interface()
+
+Each step builds on the previous one, showing clear code differences!
 """
 
 import os
@@ -32,13 +29,22 @@ try:
 except Exception:
     pass
 
-# Set up Gemini API from environment
-_api_key = os.getenv("GOOGLE_API_KEY") or os.getenv("GEMINI_API_KEY")
-if _api_key:
-    genai.configure(api_key=_api_key)
-    
-# Define WCC knowledge and personality
-wcc_system_prompt = '''You are a helpful and enthusiastic assistant for the Women Coding Community (WCC).
+# Configure Gemini API (done once at startup)
+api_key = os.getenv('GEMINI_API_KEY') or os.getenv("GOOGLE_API_KEY")
+if api_key:
+    genai.configure(api_key=api_key)
+    print(f"✓ API configured: {bool(api_key)}")
+else:
+    print("✗ WARNING: No API key found. Set GEMINI_API_KEY or GOOGLE_API_KEY environment variable.")
+
+print("🚀 WCC AI Learning Series - Session 1 Demo")
+print("=" * 50)
+
+# =============================================================================
+# SHARED SYSTEM PROMPT (Used by Steps 2-5)
+# =============================================================================
+
+WCC_SYSTEM_PROMPT = '''You are a helpful and enthusiastic assistant for the Women Coding Community (WCC).
 
 ABOUT WCC:
 - WCC is a vibrant community supporting women in technology
@@ -59,24 +65,207 @@ HOW TO HELP:
 - If you don't know something specific, suggest they check our Slack or website
 '''
 
+
 # =============================================================================
-# SECTION 5: STREAMLIT WEB INTERFACE
+# STEP 1: BASIC API CALL
 # =============================================================================
 
+def step_1_basic_api_call():
+    """
+    STEP 1: Make a simple API call to Gemini
+    
+    What we're learning:
+    - How to create a model instance
+    - How to send a prompt and get a response
+    """
+    print("\n" + "=" * 60)
+    print("STEP 1: Basic API Call")
+    print("=" * 60)
+    
+    # Create the simplest possible model instance
+    model = genai.GenerativeModel(MODEL_ID)
+    
+    # Make a simple request
+    print("\n📝 Sending prompt: 'What is Women Coding Community (WCC)?'")
+    response = model.generate_content("What is Women Coding Community (WCC)?")
+    
+    print(f"\n✅ Response:\n{response.text}")
+    print("\n🎉 SUCCESS! You just talked to AI! 🎉\n")
 
-import streamlit as st
 
-print("STEP 5: Creating Web Interface with Streamlit")
-print("-" * 45)
+# =============================================================================
+# STEP 2: ADD PERSONALITY WITH SYSTEM PROMPTS
+# =============================================================================
 
-# Streamlit Web App
-def create_streamlit_app():
-    '''
-    To run this section:
-    1. Delete the triple quotes around this entire section
-    2. Save this file as 'wcc_demo.py'
-    3. Run: streamlit run wcc_demo.py
-    '''
+def step_2_add_personality():
+    """
+    STEP 2: Add personality using system prompts
+    
+    What we're learning:
+    - How system prompts shape AI behavior
+    - How to give the AI a specific role/personality
+    - The difference between generic and specialized responses
+    """
+    print("\n" + "=" * 60)
+    print("STEP 2: Adding Personality with System Prompts")
+    print("=" * 60)
+    
+    # Create model WITH system prompt (compare to Step 1)
+    model_with_personality = genai.GenerativeModel(
+        MODEL_ID,
+        system_instruction=WCC_SYSTEM_PROMPT
+    )
+    
+    # Test questions
+    test_questions = [
+        "What is WCC?",
+        "How can I join?", 
+        "I'm new to coding, can WCC help me?"
+    ]
+    
+    print("\n📝 Testing with WCC-specific system prompt:\n")
+    for question in test_questions:
+        print(f"Q: {question}")
+        response = model_with_personality.generate_content(question)
+        print(f"A: {response.text}\n")
+        print("-" * 40)
+    
+    print("\n🌟 NOTICE: Responses are now WCC-focused and friendly! 🌟\n")
+
+
+# =============================================================================
+# STEP 3: ADD CONVERSATION MEMORY
+# =============================================================================
+
+def step_3_conversation_memory():
+    """
+    STEP 3: Add conversation memory
+    
+    What we're learning:
+    - How to maintain conversation context
+    - How to build multi-turn conversations
+    - How memory improves user experience
+    """
+    print("\n" + "=" * 60)
+    print("STEP 3: Adding Conversation Memory")
+    print("=" * 60)
+    
+    class WCCChatBot:
+        """Chatbot with conversation memory"""
+        
+        def __init__(self):
+            self.model = genai.GenerativeModel(
+                MODEL_ID,
+                system_instruction=WCC_SYSTEM_PROMPT
+            )
+            self.conversation_history = []
+        
+        def chat(self, user_input):
+            """Send message and get response with context"""
+            # Add user message to history
+            self.conversation_history.append({"role": "user", "parts": [user_input]})
+            
+            # Generate response with full history
+            response = self.model.generate_content(self.conversation_history)
+            
+            # Add assistant response to history
+            self.conversation_history.append({"role": "model", "parts": [response.text]})
+            
+            return response.text
+    
+    # Create chatbot instance
+    chatbot = WCCChatBot()
+    
+    print("\n💬 Testing conversation memory:\n")
+    
+    # First message
+    msg1 = "Hi, I'm Sonika and I'm new to programming"
+    print(f"You: {msg1}")
+    response1 = chatbot.chat(msg1)
+    print(f"Bot: {response1}\n")
+    
+    # Second message (bot should remember Sonika)
+    msg2 = "What programming language should I start with?"
+    print(f"You: {msg2}")
+    response2 = chatbot.chat(msg2)
+    print(f"Bot: {response2}\n")
+    
+    # Third message (bot should remember name and context)
+    msg3 = "Do you remember my name?"
+    print(f"You: {msg3}")
+    response3 = chatbot.chat(msg3)
+    print(f"Bot: {response3}\n")
+    
+    print("🧠 NOTICE: Bot remembers Sonika and the conversation context! 🧠\n")
+
+
+# =============================================================================
+# STEP 4: EXPLORE MODEL PARAMETERS
+# =============================================================================
+
+def step_4_model_parameters():
+    """
+    STEP 4: Explore model parameters
+    
+    What we're learning:
+    - How temperature affects creativity
+    - How top_p affects diversity
+    - How to tune parameters for different use cases
+    """
+    print("\n" + "=" * 60)
+    print("STEP 4: Understanding Model Parameters")
+    print("=" * 60)
+    
+    question = "Write a creative welcome message for new WCC members"
+    
+    print(f"\n📝 Question: {question}\n")
+    print("🌡️ TEMPERATURE EXAMPLES (Creativity):\n")
+    
+    temperatures = [
+        (0.0, "Deterministic - Same answer every time"),
+        (0.7, "Balanced - Recommended for most use cases"),
+        (1.5, "Very Creative - Different each time")
+    ]
+    
+    for temp, description in temperatures:
+        print(f"Temperature: {temp} ({description})")
+        print("-" * 40)
+        
+        generation_config = genai.types.GenerationConfig(
+            temperature=temp,
+            max_output_tokens=100,
+        )
+        
+        model_temp = genai.GenerativeModel(
+            MODEL_ID,
+            generation_config=generation_config
+        )
+        
+        response = model_temp.generate_content(question)
+        print(f"Response: {response.text}\n")
+    
+    print("⚙️ NOTICE: Higher temperature = more creative/varied responses! ⚙️\n")
+
+
+# =============================================================================
+# STEP 5: STREAMLIT WEB INTERFACE
+# =============================================================================
+
+def step_5_streamlit_interface():
+    """
+    STEP 5: Create web interface with Streamlit
+    
+    What we're learning:
+    - How to build interactive web apps
+    - How to manage UI state
+    - How to create user-friendly interfaces
+    """
+    try:
+        import streamlit as st
+    except ImportError:
+        print("\n❌ Streamlit not installed!")
+        print("Install it with: pip install streamlit")
+        return
     
     st.set_page_config(
         page_title="WCC Info Bot",
@@ -117,6 +306,7 @@ def create_streamlit_app():
         with st.chat_message("assistant"):
             with st.spinner("Thinking..."):
                 # Configure model with user settings
+                print(f"DEBUG: temperature={temperature}, max_tokens={max_tokens}, top_p={top_p}")
                 generation_config = genai.types.GenerationConfig(
                     temperature=temperature,
                     max_output_tokens=max_tokens,
@@ -126,17 +316,23 @@ def create_streamlit_app():
                 model_ui = genai.GenerativeModel(
                     MODEL_ID,
                     generation_config=generation_config,
-                    system_instruction=wcc_system_prompt
+                    system_instruction=WCC_SYSTEM_PROMPT
                 )
                 
-                # Create conversation context
-                context = "\\n".join([
-                    f"{msg['role']}: {msg['content']}" 
-                    for msg in st.session_state.messages[-5:]  # Last 5 messages
-                ])
+                # Convert chat history to proper format for API
+                # The API expects: [{"role": "user", "parts": [...]}, {"role": "model", "parts": [...]}]
+                conversation_history = []
+                for msg in st.session_state.messages[:-1]:  # Exclude the current user message (already added)
+                    if msg["role"] == "user":
+                        conversation_history.append({"role": "user", "parts": [msg["content"]]})
+                    else:  # assistant
+                        conversation_history.append({"role": "model", "parts": [msg["content"]]})
                 
-                full_prompt = f"Conversation context:\\n{context}\\n\\nUser: {prompt}"
-                response = model_ui.generate_content(full_prompt)
+                # Add current user prompt
+                conversation_history.append({"role": "user", "parts": [prompt]})
+                
+                # Generate response with full conversation history
+                response = model_ui.generate_content(conversation_history)
                 
                 st.markdown(response.text)
         
@@ -166,53 +362,26 @@ def create_streamlit_app():
         - 🎯 **Top-p**: Lower = more focused responses
         ''')
 
-# Instructions for running Streamlit
-print('''
-🌐 TO CREATE WEB INTERFACE:
-========================
-1. Delete the triple quotes around SECTION 5 above
-2. Save this file as 'wcc_demo.py'  
-3. Install Streamlit: pip install streamlit
-4. Run: streamlit run wcc_demo.py
-5. Your browser will open with the web app!
-
-📱 FEATURES OF THE WEB APP:
-- Interactive chat interface
-- Adjustable model parameters
-- Conversation history
-- Mobile-friendly design
-''')
-
-# Only run Streamlit if this section is uncommented and file is run with streamlit
-if __name__ == "__main__" and "streamlit" in os.environ.get("_", ""):
-    create_streamlit_app()
-
 
 # =============================================================================
-# DEMO COMPLETION
+# MAIN: UNCOMMENT STEPS TO RUN
 # =============================================================================
 
-print("🎓 SESSION 1 DEMO COMPLETE!")
-print("=" * 30)
-print("""
-WHAT WE BUILT TODAY:
-✅ Basic API integration with Gemini
-✅ AI personality with system prompts  
-✅ Conversation memory management
-✅ Model parameter experimentation
-✅ Web interface with Streamlit
-
-NEXT STEPS:
-1. Uncomment sections one by one as you follow along
-2. Experiment with different prompts and parameters
-3. Customize the WCC knowledge base
-4. Deploy your bot and share with the community!
-
-HOMEWORK:
-- Enhance your bot with more WCC information
-- Try different model parameters
-- Add your bot to GitHub
-- Come to Session 2 with questions!
-
-Happy coding! 💪🌟
-""")
+if __name__ == "__main__":
+    # Run all steps to build up to the Streamlit interface
+    # Each step builds on the previous one, showing clear code differences!
+    
+    # Step 1: Basic API integration with Gemini
+    # step_1_basic_api_call()
+    
+    # Step 2: AI personality with system prompts
+    # step_2_add_personality()
+    
+    # Step 3: Conversation memory management
+    # step_3_conversation_memory()
+    
+    # Step 4: Model parameter experimentation
+    # step_4_model_parameters()
+    
+    # Step 5: Web interface with Streamlit (with personality + conversation history)
+    step_5_streamlit_interface()  # Run with: streamlit run wcc_app.py
