@@ -301,6 +301,8 @@ Guidelines:
 - [OpenAI Prompt Engineering Guide](https://platform.openai.com/docs/guides/prompt-engineering)
 - [Anthropic Prompt Engineering](https://docs.anthropic.com/claude/docs/introduction-to-prompt-design)
 - [Google Prompt Design Guide](https://ai.google.dev/docs/prompt_best_practices)
+- [Google Prompt Prompt Engineering: Overview and Guide](https://cloud.google.com/discover/what-is-prompt-engineering?authuser=8&hl=en)
+- [Prompting Framework](https://medium.com/@goelsonali/mastering-prompt-engineering-with-the-p-a-t-t-e-r-n-framework-273e873d8bf1)
 
 ---
 
