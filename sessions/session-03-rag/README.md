@@ -46,14 +46,21 @@ session-03-rag/
 cd sessions/session-03-rag/live-demo
 pip install -r requirements.txt
 gcloud auth application-default login
-# Edit line 27: PROJECT_ID = "your-gcp-project-id"
-python rag_demo.py --reset
+gcloud config set project YOUR_PROJECT_ID
+```
+
+### Create `.env` file
+
+```env
+PROJECT_ID=your-gcp-project-id
+LOCATION=us-central1
+GENERATION_MODEL_NAME=gemini-2.5-flash-lite
 ```
 
 ### Run Demo (30 min)
 
 ```bash
-python rag_demo.py --all          # Full demo
+python rag_demo.py --all          # Full demo with Enter prompts
 python rag_demo.py --search       # Search only
 python rag_demo.py --rag          # RAG only
 streamlit run streamlit_app.py    # Interactive UI

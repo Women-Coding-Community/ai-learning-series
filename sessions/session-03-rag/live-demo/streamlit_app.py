@@ -78,8 +78,8 @@ st.markdown("""
 # ============================================================================
 
 with st.sidebar:
-    st.image("https://via.placeholder.com/300x100/6B46C1/FFFFFF?text=WCC+AI+Series", 
-             use_column_width=True)
+    st.image("wcc.png", 
+             width=50)
     
     st.markdown("### ⚙️ Search Settings")
     
@@ -123,7 +123,7 @@ with st.sidebar:
     **Indexed blogs:** {len(SAMPLE_BLOGS)}  
     **Total chunks:** {doc_count}  
     **Embedding model:** text-embedding-004  
-    **LLM:** gemini-1.5-flash
+    **LLM:** gemini-2.5-flash-lite
     """)
     
     st.markdown("---")

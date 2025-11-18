@@ -1,79 +1,176 @@
 # Starter Template: RAG Pipeline
 
-Build your own RAG system. Start here, then pick a use case from [use-case-guides/](../use-case-guides/).
+A beginner-friendly RAG implementation to learn the core concepts and build your own system.
 
-## Setup (5 min)
+## Quick Start (10 min)
+
+### 1. Setup
 
 ```bash
 pip install -r requirements.txt
 gcloud auth application-default login
+gcloud config set project YOUR_PROJECT_ID
 ```
 
-## Core RAG Pipeline
+### 2. Create `.env` file
 
-Use `rag_pipeline.py` as your foundation:
+```env
+PROJECT_ID=your-gcp-project-id
+LOCATION=us-central1
+GENERATION_MODEL_NAME=gemini-2.5-flash-lite
+```
+
+### 3. Run the example
+
+```bash
+python rag_pipeline.py
+```
+
+## Understanding RAG: The 4 Steps
+
+The `RAGPipeline` class breaks RAG into 4 simple steps:
+
+### Step 1: Chunking
+Break large documents into smaller pieces for better retrieval.
 
 ```python
-from rag_pipeline import RAGPipeline
+rag.chunk_documents(documents, chunk_size=400, chunk_overlap=50)
+```
 
-# Initialize
-rag = RAGPipeline(project_id="your-gcp-project-id")
+### Step 2: Embedding & Storage
+Convert text to vectors and store in a local database.
 
-# 1. Load and chunk documents
-documents = [
-    {"title": "Doc 1", "content": "..."},
-    {"title": "Doc 2", "content": "..."}
-]
-rag.chunk_documents(documents, chunk_size=400)
-
-# 2. Generate embeddings and store
+```python
 rag.embed_and_store()
+```
 
-# 3. Search
+### Step 3: Search
+Find the most relevant chunks for a query.
+
+```python
 results = rag.search("Your question here", k=5)
+```
 
-# 4. Get RAG answer
+### Step 4: Generation (Full RAG)
+Combine retrieved chunks with an LLM to generate answers.
+
+```python
 answer = rag.query("Your question here")
 print(answer['answer'])
 print(answer['sources'])
 ```
 
+## Complete Example
+
+```python
+from rag_pipeline import RAGPipeline
+import os
+
+# Initialize
+rag = RAGPipeline(project_id=os.getenv("PROJECT_ID"))
+
+# Your documents
+documents = [
+    {
+        "title": "Python Basics",
+        "source": "WCC Blog",
+        "content": "Python is a versatile programming language..."
+    },
+    {
+        "title": "Web Development",
+        "source": "WCC Workshop",
+        "content": "Django is a Python web framework..."
+    }
+]
+
+# Run the pipeline
+rag.chunk_documents(documents, chunk_size=200)
+rag.embed_and_store()
+
+# Ask questions
+result = rag.query("How do I learn Python?")
+print(result['answer'])
+```
+
 ## Customization
 
-### Change Chunk Size
+### Adjust Chunk Size
 
 ```python
-rag.chunk_documents(documents, chunk_size=200)  # Smaller
-rag.chunk_documents(documents, chunk_size=800)  # Larger
+# Smaller chunks = more specific retrieval
+rag.chunk_documents(documents, chunk_size=200)
+
+# Larger chunks = more context
+rag.chunk_documents(documents, chunk_size=800)
 ```
 
-### Adjust Number of Retrieved Results
+### Change Number of Retrieved Results
 
 ```python
-results = rag.search(query, k=3)   # Top 3
-results = rag.search(query, k=10)  # Top 10
+# Get top 3 most relevant chunks
+results = rag.search(query, k=3)
+
+# Get top 10
+results = rag.search(query, k=10)
 ```
 
-### Use Different LLM
+### Use Different Gemini Model
 
 ```python
-rag.generation_model = GenerativeModel("gemini-1.5-pro")
+# Use a more powerful model
+result = rag.query("Your question", model="gemini-1.5-pro")
+```
+
+## Utilities
+
+```python
+# Check status
+rag.status()
+
+# Clear everything and start fresh
+rag.reset()
 ```
 
 ## Next Steps
 
-1. Choose a use case: [Blog Search](../use-case-guides/wcc-blog-search.md) | [Event Archive](../use-case-guides/event-archive-qa.md) | [Mentorship KB](../use-case-guides/mentorship-kb.md)
-2. Collect your data (10-20 documents)
-3. Follow the use case guide
-4. Experiment with chunk sizes
-5. Submit to `participants/[your-username]/`
+1. **Understand the code**: Read through `rag_pipeline.py` - it's heavily commented!
+2. **Experiment**: Try different chunk sizes, models, and documents
+3. **Build your own**: Use this as a template for your data
+4. **Explore use cases**: Check [use-case-guides/](../use-case-guides/) for real-world examples
+5. **Compare approaches**: See the [full demo](../live-demo/) for production patterns
+
+## Key Concepts
+
+| Concept | What it does | Why it matters |
+|---------|-------------|----------------|
+| **Chunking** | Breaks documents into pieces | Smaller pieces = better retrieval |
+| **Embedding** | Converts text to vectors | Enables semantic search |
+| **Vector DB** | Stores and searches vectors | Fast similarity matching |
+| **Retrieval** | Finds relevant chunks | Provides context for LLM |
+| **Generation** | LLM creates answer | Combines context with reasoning |
+
+## Troubleshooting
+
+**"No module named 'google'"**
+```bash
+pip install --upgrade google-generativeai google-genai
+```
+
+**"Project not found"**
+Make sure `PROJECT_ID` in `.env` matches your GCP project.
+
+**"API not enabled"**
+Enable Vertex AI API in your GCP project console.
 
 ## Resources
 
-- [Live Demo](../live-demo/README.md) - Full working example
-- [Vertex AI Embeddings](https://cloud.google.com/vertex-ai/docs/generative-ai/embeddings/get-text-embeddings)
+- [Live Demo](../live-demo/README.md) - Full working example with Streamlit
+- [Vertex AI Docs](https://cloud.google.com/vertex-ai/docs)
 - [ChromaDB Docs](https://docs.trychroma.com/)
+- [Gemini API](https://ai.google.dev/)
 
 ---
 
-Happy coding! 🚀
+**Happy learning! 🚀**
+
+Questions? Check the [live-demo](../live-demo/) for more examples or ask in the WCC Slack!

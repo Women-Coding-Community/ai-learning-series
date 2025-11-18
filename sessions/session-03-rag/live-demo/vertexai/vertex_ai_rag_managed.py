@@ -20,19 +20,24 @@ Prerequisites:
 import os
 import vertexai
 from vertexai.preview import rag
-from vertexai.preview.generative_models import GenerativeModel
 from google.cloud import storage
+from dotenv import load_dotenv
+from google import genai
 
 # ============================================================================
 # CONFIGURATION
 # ============================================================================
 
-PROJECT_ID = "your-project-id"  # TODO: Update this
-LOCATION = "us-central1"
+load_dotenv()
+
+PROJECT_ID = os.getenv("PROJECT_ID")
+LOCATION = os.getenv("LOCATION", "us-central1")
+GENERATION_MODEL_NAME = os.getenv("GENERATION_MODEL_NAME", "gemini-2.5-flash-lite")
 BUCKET_NAME = f"{PROJECT_ID}-rag-demo"  # Will be created if doesn't exist
 
-# Initialize Vertex AI
+# Initialize Vertex AI and Generative AI client
 vertexai.init(project=PROJECT_ID, location=LOCATION)
+genai.configure_vertex(project=PROJECT_ID, location=LOCATION)
 
 # ============================================================================
 # STEP 1: PREPARE DOCUMENTS IN CLOUD STORAGE
