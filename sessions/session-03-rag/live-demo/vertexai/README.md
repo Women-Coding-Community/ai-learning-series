@@ -147,7 +147,6 @@ session-3-rag/
 ├── streamlit_app.py               # Web interface
 ├── requirements.txt               # Python dependencies
 ├── README.md                      # This file
-├── PRESENTERS_GUIDE.md           # Delivery guide for instructors
 ├── QUICK_REFERENCE.md            # Quick reference card
 └── .env.example                  # Environment variables template
 ```

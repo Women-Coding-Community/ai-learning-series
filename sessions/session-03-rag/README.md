@@ -1,8 +1,7 @@
 # Session 3: Introduction to RAG (Retrieval Augmented Generation)
 
 **Date:** November 19, 2025  
-**Instructor:** Sonika  
-**Duration:** 60 minutes (15 min theory + 30 min live demo + 15 min wrap-up)
+**Duration:** 60 minutes
 
 ## 🎯 Learning Objectives
 
@@ -19,12 +18,11 @@ session-03-rag/
 ├── README.md                    # This file
 ├── QUICK_START.md               # 30-second setup guide
 ├── DEMO_PREP_SUMMARY.md         # Full prep context
-├── live-demo/                   # Live coding demo
+├── live-demo/                   # Complete working example
 │   ├── rag_demo.py
 │   ├── streamlit_app.py
 │   ├── requirements.txt
-│   ├── README.md
-│   └── SPEAKER_NOTES.md
+│   └── README.md
 ├── starter-template/            # Template for participants
 │   ├── rag_pipeline.py
 │   ├── requirements.txt
@@ -73,7 +71,6 @@ See [QUICK_START.md](./QUICK_START.md) for details.
 - **Live Demo:** Complete RAG pipeline with 5 WCC blog posts pre-loaded
 - **Starter Template:** Minimal code to build your own RAG system
 - **Use Case Guides:** 3 concrete implementations (Blog Search, Event Archive, Mentorship KB)
-- **Speaker Notes:** Minute-by-minute script for instructors
 
 ## 🎓 Use Cases
 
