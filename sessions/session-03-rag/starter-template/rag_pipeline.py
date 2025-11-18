@@ -17,7 +17,6 @@ import vertexai
 from google import genai
 from google.genai import types
 import chromadb
-from chromadb.config import Settings
 from langchain_text_splitters.character import RecursiveCharacterTextSplitter
 
 
@@ -58,11 +57,8 @@ class RAGPipeline:
         self.embedding_model_name = os.getenv("EMBEDDING_MODEL_NAME", "text-embedding-004")
         self.generation_model_name = os.getenv("GENERATION_MODEL_NAME", "gemini-2.5-flash-lite")
         
-        # Initialize ChromaDB (local vector database)
-        self.chroma_client = chromadb.Client(Settings(
-            anonymized_telemetry=False,
-            allow_reset=True
-        ))
+        # Initialize ChromaDB (local, persistent storage)
+        self.chroma_client = chromadb.PersistentClient(path="./chroma_data")
         
         # Create or get collection
         self.collection_name = "my_documents"

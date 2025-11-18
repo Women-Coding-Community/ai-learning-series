@@ -41,10 +41,11 @@ GENERATION_MODEL_NAME = os.getenv("GENERATION_MODEL_NAME", "gemini-2.5-flash-lit
 EMBEDDING_MODEL_NAME = os.getenv("EMBEDDING_MODEL_NAME", "text-embedding-004")
 
 # Initialize ChromaDB (local, persistent storage)
-chroma_client = chromadb.Client(Settings(
-    anonymized_telemetry=False,
-    allow_reset=True
-))
+# chroma_client = chromadb.Client(Settings(
+#    anonymized_telemetry=False,
+#    allow_reset=True
+#))
+chroma_client = chromadb.PersistentClient(path="./chroma_data")
 
 # Create or get collection
 collection_name = "wcc_blogs"
