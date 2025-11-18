@@ -1,0 +1,6 @@
+google-cloud-aiplatform>=1.40.0
+google-generativeai>=0.3.0
+chromadb>=0.4.0
+langchain>=0.1.0
+streamlit>=1.28.0
+python-dotenv>=1.0.0
