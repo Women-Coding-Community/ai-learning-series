@@ -14,6 +14,7 @@ source venv/Scripts/activate  # Windows Git Bash
 
 # Install dependencies
 pip install -r requirements.txt
+pip install beautifulsoup4 requests
 ```
 
 ### 2. Configure

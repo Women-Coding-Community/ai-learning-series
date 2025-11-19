@@ -1,6 +1,5 @@
 """
-Basic Chatbot Starter Template
-This is a simple chatbot that uses Gemini API to respond to user input.
+This is a simple chatbot that uses Gemini API and web scraping to respond to user input.
 """
 
 import os
@@ -8,6 +7,8 @@ import sys
 import google.generativeai as genai
 from dotenv import load_dotenv
 import json
+import requests
+from bs4 import BeautifulSoup
 
 global_encoding = 'utf-8'
 
@@ -36,6 +37,39 @@ faq_text = "\n".join([
     f"Q: {faq['question']}\nA: {faq['answer']}"
     for faq in wcc_data["faqs"]
 ])
+
+
+
+def scrape_wcc_events():
+    """Scrape upcoming events from WCC website"""
+
+    url = "https://www.womencodingcommunity.com/events"
+    
+    try:
+        response = requests.get(url)
+        soup = BeautifulSoup(response.content, 'html.parser')
+        
+        events = []
+        for event in soup.find_all('div', class_='event'):
+            events.append({
+                "title": event.find('h3').text,
+                "date": event.find('span', class_='date').text,
+                "description": event.find('p').text
+            })
+        
+        return events
+    except Exception as e:
+        print(f"Error scraping: {e}")
+        return []
+
+
+#Store the latest events
+events = scrape_wcc_events()
+events_text = "\n".join([
+    f"- {e['title']} on {e['date']}: {e['description']}"
+    for e in events
+])
+
 
 class SimpleBot:
     """A simple chatbot using Gemini API"""
@@ -95,9 +129,11 @@ class SimpleBot:
         self.conversation_history = []
 
 
+
+
 def main():
     """Main function to run the chatbot"""
-    print("HEY! Welcome to the Simple WCC Chatbot!")
+    print("Hey :) Welcome to the WCC Chatbot! You can ask me about general info or upcoming events")
     print("Type 'quit' to exit, 'clear' to clear history\n")
 
     # Create bot with optional system prompt
@@ -108,6 +144,9 @@ You know their path may be difficult, and you don't want them to give up.
 
 Here are the FAQs you should reference:
 {faq_text}
+
+Here are the Upcoming events:
+{events_text}
 
 Always be encouraging and supportive.
 Use emojis occasionally to add warmth.
