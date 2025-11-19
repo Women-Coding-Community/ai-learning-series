@@ -9,8 +9,10 @@ import google.generativeai as genai
 from dotenv import load_dotenv
 import json
 
-sys.stdin.reconfigure(encoding='utf-8') 
-sys.stdout.reconfigure(encoding='utf-8')
+global_encoding = 'utf-8'
+
+sys.stdin.reconfigure(encoding=global_encoding) 
+sys.stdout.reconfigure(encoding=global_encoding)
 
 # Load environment variables from .env file
 load_dotenv()
@@ -26,7 +28,7 @@ if not API_KEY:
 genai.configure(api_key=API_KEY)
 
 # Load WCC FAQs
-with open("wcc_faqs.json", encoding="utf-8") as f:
+with open("wcc_faqs.json", encoding=global_encoding) as f:
     wcc_data = json.load(f)
 
 # Create FAQ context
