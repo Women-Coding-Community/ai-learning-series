@@ -1,0 +1,20 @@
+{
+    "faqs": [
+      {
+        "question": "What is WCC?",
+        "answer": "Women Coding Community is a global community of women in tech..."
+      },
+      {
+        "question": "How do I join WCC?",
+        "answer": "Visit our website and sign up for free..."
+      },
+      {
+        "question": "When are the sessions?",
+        "answer": "Sessions are held every other Wednesday at 7 PM EST..."
+      },
+      {
+        "question": "Can I volunteer?",
+        "answer": "Absolutely! We're always looking for volunteers..."
+      }
+    ]
+  }
