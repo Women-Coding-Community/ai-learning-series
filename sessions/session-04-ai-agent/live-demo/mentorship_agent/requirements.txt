@@ -6,4 +6,3 @@ python-dotenv>=1.0.0
 requests>=2.31.0
 beautifulsoup4>=4.12.2
 pandas>=2.3.3
-gradio>=5.49.1

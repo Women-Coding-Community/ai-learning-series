@@ -8,11 +8,10 @@
 
 By the end of this session, you will:
 
-- Understand AI, ML, and LLM concepts
-- Set up GCP/Vertex AI and get API credentials
-- Make your first API call to Gemini
-- Build a basic chatbot with conversation memory
-- Handle API responses and errors
+- Understand what AI agents are and how they differ from chatbots
+- Learn about agent frameworks and tool calling
+- Build an AI agent that can use tools to accomplish tasks
+- Implement function calling with Gemini API
 
 ## 📚 What We'll Cover
 
@@ -22,6 +21,31 @@ By the end of this session, you will:
 - Building AI agent via google adk
 
 ![alt text](image.png)
+
+## 🧠 Key Concepts
+### What is an AI Agent?
+
+An AI agent is an AI system that can:
+- Perceive - Understand user requests and environment
+- Reason - Decide what actions to take
+- Act - Execute actions using available tools
+- Learn - Adapt behavior based on outcomes
+
+### Agent vs. Chatbot
+
+| Chatbot               | AI Agent                    |
+|-----------------------|-----------------------------|
+| Responds to questions | Takes actions               |
+| Static responses      | Dynamic decision-making     |
+| Single-turn interactions | Multi-step workflows     |
+| No tool access       | Can use external tools       |
+
+
+## 🛠️ Technical Stack
+
+- Python 3.11+
+- Google Vertex AI / Gemini API
+- Function Calling for tool integration
 
 ## 📁 Folder Structure
 
@@ -117,9 +141,7 @@ A: The basic AI agent takes ~30 minutes. Enhancements depend on your ideas!
 
 ## 📚 Additional Resources
 
-- [Vertex AI Python SDK Documentation](https://cloud.google.com/python/docs/reference/aiplatform/latest)
+- [Google ADK Documentation](https://google.github.io/adk-docs/get-started/)
 - [Gemini API Reference](https://cloud.google.com/vertex-ai/docs/generative-ai/model-reference/gemini)
-- [Prompt Engineering Guide](../../resources/prompt-engineering-guide.md)
-- [Security Checklist](../../resources/security-checklist.md)
 
 ---

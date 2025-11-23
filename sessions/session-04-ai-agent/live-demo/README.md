@@ -1,8 +1,8 @@
-# Session 1 Live Demo - WCC Info Bot
+# Session 4 Live Demo - WCC Mentorship Coordinator Agent
 
 ## Overview
 
-This folder contains the live coding demo for Session 1. We'll build a chatbot step-by-step, progressively adding features to demonstrate key concepts.
+This folder contains the live coding demo for Session 4. We'll build a mentorship coordinator AI agent.
 
 ---
 
@@ -29,8 +29,8 @@ GOOGLE_API_KEY=your-api-key-here
 
 ## Files in This Folder
 
-- **`wcc_demo.py`** - Main demo file with 5 progressive sections
-- **`requirements.txt`** - Python dependencies
+- **`mentorship_agent/agent.py`** - Main demo file with single agent set-up
+- **`mentorship_agent/requirements.txt`** - Python dependencies
 - **`README.md`** - This file
 
 ---
@@ -54,238 +54,23 @@ GOOGLE_API_KEY=your-gemini-api-key-here
 Get your API key: [Gemini API Key Setup Guide](../../getting-started/gemini-api-key-setup.md)
 
 3. **Launch the Web Interface:**
-Navigate to the folder containing your mentorship_agent folder (/live-demo) and run:
+- Navigate to the folder containing your mentorship_agent folder (/live-demo) and run:
 
 ```bash
 adk web
 ```
-* This will start a local server (usually at `http://localhost:3000`).
-* You will see a chat interface where you can type: 
-    - "I want to learn Python, can you find me a mentor?"or
-    - "What are the requirements for this program?"
+- This will start a local server (usually at `http://127.0.0.1:8000`).
+- You will see a chat interface where you can type: 
+    - "I would like to join this mentorship program" or
+    - "Can you find me a mentor with Java skills?"
 
-4. **Run the Agent Dashboard (Used streamlit):**
-```bash
-streamlit run mentorship_agent/dashboard.py    
-```
 
 ---
 
-## Demo Structure
+## Demo Details
 
-The demo is divided into 5 progressive sections. Start with Section 1 and uncomment sections as you follow along during the live session.
+The demo is showcasing how an AI agent ( which will be WCC mentorship coordinator) can help with ask correct questions for registration of a mentor or mentee, how can validate a mentor or mentee's profile, and once the profile is validated how it store in a data source.
 
-### Section 1: Basic API Call ✅ (ACTIVE BY DEFAULT)
-
-**What you'll learn:**
-
-- How to configure the Gemini API
-- Making your first API call
-- Getting a response from the AI
-
-**Key code:**
-
-```python
-import google.generativeai as genai
-
-genai.configure(api_key=api_key)
-model = genai.GenerativeModel('gemini-2.5-flash-lite')
-response = model.generate_content("What is Women Coding Community (WCC)?")
-print(response.text)
-```
-
-**Output:**
-
-```bash
-AI Response: [AI's response about WCC]
-🎉 SUCCESS! You just talked to AI! 🎉
-```
-
----
-
-### Section 2: Add Personality with System Prompts
-
-**What you'll learn:**
-
-- Using system prompts to give AI a personality
-- How system prompts influence responses
-- Creating domain-specific AI assistants
-
-**To activate:**
-
-1. Find the `'''` (triple quotes) on line ~49
-2. Delete them to uncomment Section 1 code
-3. Find the `'''` on line ~64
-4. Delete them to uncomment Section 2
-
-**Key code:**
-
-```python
-wcc_system_prompt = '''You are a helpful assistant for WCC...'''
-
-model_with_personality = genai.GenerativeModel(
-    'gemini-2.5-flash-lite',
-    system_instruction=wcc_system_prompt
-)
-
-response = model_with_personality.generate_content("What is WCC?")
-```
-
-**What changes:**
-
-- Responses become more WCC-focused
-- AI shows personality and enthusiasm
-- Answers align with community values
-
----
-
-### Section 3: Add Conversation Memory
-
-**What you'll learn:**
-
-- Maintaining conversation history
-- Context-aware responses
-- Building multi-turn conversations
-
-**To activate:**
-
-1. Find the `"""` (triple quotes) on line ~114
-2. Delete them to uncomment Section 3
-
-**Key code:**
-
-```python
-class WCCChatBot:
-    def __init__(self):
-        self.conversation_history = []
-    
-    def chat(self, user_input):
-        # Add to history
-        self.conversation_history.append(f"User: {user_input}")
-        
-        # Generate response with context
-        response = self.model.generate_content(full_prompt)
-        
-        # Add response to history
-        self.conversation_history.append(f"Assistant: {response.text}")
-        return response.text
-```
-
-**What you'll see:**
-
-- Bot remembers previous messages
-- Responses reference earlier context
-- Natural multi-turn conversations
-
----
-
-### Section 4: Explore Model Parameters
-
-**What you'll learn:**
-
-- Temperature (creativity vs consistency)
-- Top-p (diversity of responses)
-- Top-k (token selection)
-- Max tokens (response length)
-
-**To activate:**
-
-1. Find the `"""` (triple quotes) on line ~167
-2. Delete them to uncomment Section 4
-
-**Key code:**
-
-```python
-generation_config = genai.types.GenerationConfig(
-    temperature=0.7,      # 0=deterministic, 2=very creative
-    max_output_tokens=100,
-    top_p=0.9,           # nucleus sampling
-    top_k=50             # top-k sampling
-)
-
-model = genai.GenerativeModel(
-    'gemini-2.5-flash-lite',
-    generation_config=generation_config
-)
-```
-
-**Parameter Guide:**
-
-| Parameter | Range | Effect |
-|-----------|-------|--------|
-| **Temperature** | 0.0 - 2.0 | Higher = more creative, lower = more consistent |
-| **Top-p** | 0.0 - 1.0 | Lower = more focused, higher = more diverse |
-| **Top-k** | 1+ | Limits to top-k tokens (lower = more focused) |
-| **Max Tokens** | 1+ | Maximum response length |
-
----
-
-### Section 5: Create Web Interface with Streamlit
-
-**What you'll learn:**
-
-- Building interactive web interfaces
-- Streamlit components (chat, sliders, etc.)
-- Session state management
-- Real-time parameter adjustment
-
-**To activate:**
-
-1. Find the `'''` (triple quotes) on line ~246
-2. Delete them to uncomment Section 5
-3. Install Streamlit: `pip install streamlit`
-4. Run: `streamlit run wcc_demo.py`
-
-**Key features:**
-
-- Interactive chat interface
-- Adjustable model parameters with sliders
-- Conversation history display
-- Real-time settings adjustment
-- Mobile-friendly design
-
-**Streamlit code highlights:**
-
-```python
-import streamlit as st
-
-st.title("🌟 WCC Info Bot")
-
-# Sidebar controls
-temperature = st.sidebar.slider("Temperature", 0.0, 2.0, 0.7)
-max_tokens = st.sidebar.slider("Max Tokens", 50, 500, 200)
-
-# Chat interface
-if prompt := st.chat_input("What would you like to know?"):
-    st.chat_message("user").write(prompt)
-    response = model.generate_content(prompt)
-    st.chat_message("assistant").write(response.text)
-```
-
----
-
-## Running Each Section
-
-### Option 1: Run Full Demo (All Sections)
-
-```bash
-python wcc_demo.py
-```
-
-This will run Section 1 and print instructions for activating other sections.
-
-### Option 2: Uncomment Sections During Live Session
-
-Follow the instructions in the file to uncomment sections one by one as the instructor demonstrates each concept.
-
-### Option 3: Run Streamlit Web App
-
-```bash
-# Uncomment Section 5 first, then:
-streamlit run wcc_demo.py
-```
-
-Your browser will open with an interactive web interface!
 
 ---
 
@@ -315,101 +100,127 @@ pip install google-generativeai
 2. Update your `.env` file
 3. Try again
 
-### Streamlit not starting
-
-**Solution:**
-
-```bash
-pip install streamlit
-streamlit run wcc_demo.py
-```
-
 ---
 
 ## Customization Ideas
 
-### Modify the System Prompt
+### Add more tools for the Agent
 
-Edit the `wcc_system_prompt` variable to change the bot's personality:
+Edit the `mentorship_agent/tools/mentorship_tools.py` to add more custom tools for the agent:
+
+1. The "Feedback Logger" Tool
+- Goal: Track the health of the relationship of the mentor-mentee relationship. 
+- Why: Allows the agent to "remember" if a pair is doing well or struggling.
 
 ```python
-wcc_system_prompt = '''You are a helpful assistant for WCC.
-[Customize this section with your own knowledge base]
-'''
+def log_session_feedback(mentee_name: str, mentor_name: str, rating: int, notes: str) -> str:
+    """
+    Logs feedback after a session to track relationship health.
+    
+    Args:
+        mentee_name: Name of the mentee.
+        mentor_name: Name of the mentor.
+        rating: 1-5 score of the session.
+        notes: Qualitative feedback (e.g. "Great advice," "Mentor was late").
+    """
+    feedback_entry = {
+        "mentee": mentee_name,
+        "mentor": mentor_name,
+        "rating": rating,
+        "notes": notes,
+        "status": "At Risk" if rating < 3 else "Healthy"
+    }
+    
+    # Append to a simple log file (or use your existing JSON structure)
+    log_file = "mentorship_agent/session_logs.json"
+    
+    try:
+        logs = []
+        if os.path.exists(log_file):
+            with open(log_file, 'r') as f:
+                logs = json.load(f)
+        
+        logs.append(feedback_entry)
+        
+        with open(log_file, 'w') as f:
+            json.dump(logs, f, indent=2)
+            
+        if rating < 3:
+            return "Feedback logged. ⚠️ Low rating detected - flagging for human coordinator review."
+        return "Feedback logged successfully. Glad to hear the session happened!"
+        
+    except Exception as e:
+        return f"Error logging feedback: {str(e)}"
 ```
 
-### Add More Test Questions
+2. The "Resource Librarian" Tool
 
-Add questions to test different aspects:
-
-```python
-test_questions = [
-    "What is WCC?",
-    "How can I join?",
-    "Your custom question here?"
-]
-```
-
-### Change the Model
-
-Try different models:
+- Goal: Instant value add for Mentees. 
+- Why: Instead of hallucinating links, this tool returns a curated list of high-quality resources.
 
 ```python
-MODEL_ID = 'gemini-2.5-pro'  # More powerful but slower
-MODEL_ID = 'gemini-2.5-flash'  # Balanced performance
-MODEL_ID = 'gemini-2.5-flash-lite'  # Fastest and cheapest (default)
-```
-
-### Extend the Web Interface
-
-Add more Streamlit components:
-
-```python
-st.sidebar.markdown("---")
-st.sidebar.write("📊 Statistics")
-st.sidebar.metric("Messages", len(st.session_state.messages))
+def recommend_learning_resources(topic: str) -> str:
+    """
+    Returns a curated list of learning resources for specific topics.
+    
+    Args:
+        topic: The skill or topic (e.g., 'Python', 'Leadership', 'System Design').
+    """
+    library = {
+        "python": "1. 'Fluent Python' (Book) - Advanced\n2. RealPython.com (Website) - Practical tutorials",
+        "leadership": "1. 'The Making of a Manager' by Julie Zhuo\n2. HBR Podcast: IdeaCast",
+        "system design": "1. 'Designing Data-Intensive Applications' (The Bible of SD)\n2. System Design Prime (GitHub Repo)",
+        "career growth": "1. 'Staff Engineer: Leadership beyond the management track' by Will Larson"
+    }
+    
+    topic_key = topic.lower()
+    # Simple substring search
+    matches = [content for key, content in library.items() if key in topic_key or topic_key in key]
+    
+    if matches:
+        return f"Here are some top resources for {topic}:\n" + "\n---\n".join(matches)
+    
+    return f"I don't have a curated list for '{topic}' yet. Try 'Python', 'Leadership', or 'System Design'."
 ```
 
 ---
 
 ## Learning Outcomes
 
-After completing this demo, you'll understand:
+- Here are some high-level concepts you will learn from this demo:
 
-✅ How to authenticate with Gemini API  
-✅ Making API calls and handling responses  
-✅ Using system prompts for AI personality  
-✅ Managing conversation history  
-✅ Tuning model parameters  
-✅ Building web interfaces with Streamlit  
-✅ Best practices for chatbot development  
+1. **ReAct Pattern**: How agents use a "Reason-Act" loop to dynamically decide which action to take next rather than just predicting the next word like a chatbot.
+
+2. **Tool Usage**: How to give an LLM "hands" by connecting it to custom Python functions (like saving to a JSON file) to perform real-world tasks.
+
+3. **State Management**: The code demonstrated how to maintain both short-term conversational context (via the Runner) and long-term persistent memory (via the database file).
+
+4. **ADK Architecture**: How Google ADK provides comprehensive framework to simplify building AI agents.
 
 ---
 
 ## Next Steps
 
-1. **Enhance the bot** - Add more WCC knowledge
+1. **Enhance the agent** - Add more tools for this agent
 2. **Deploy it** - Share with the community
 3. **Customize it** - Make it your own
 4. **Use other platforms** - Try AWS, Azure, or OpenAI
-5. **Build your use case** - Choose from Career Coach or Code Buddy
+5. **Build your use case** - Choose from list from use-case-guides
 
 ---
 
 ## Resources
 
+- [Google ADK Documentation](https://google.github.io/adk-docs/get-started/)
 - [Gemini API Documentation](https://ai.google.dev/gemini-api/docs)
 - [Gemini API Key Setup](../../getting-started/gemini-api-key-setup.md)
-- [Streamlit Documentation](https://docs.streamlit.io)
-- [Python SDK Reference](https://ai.google.dev/tutorials/python_quickstart)
-- [Prompt Engineering Guide](../../resources/prompt-engineering-guide.md)
 
 ---
 
 ## Questions?
 
-Ask in the [WCC Slack](https://womencodingcommunity.slack.com/archives/C09L9C3FJP7) channel or check the [Troubleshooting Guide](../../resources/troubleshooting.md)!
+Ask in the [WCC Slack](https://womencodingcommunity.slack.com/archives/C09L9C3FJP7) channel
 
 ---
 
-**Let's build amazing AI projects together! 🚀**
+**Let's build amazing AI Agents together! 🚀**
