@@ -1,0 +1,18 @@
+--- MENTORSHIP PROGRAM GUIDELINES & ELIGIBILITY ---
+
+MENTOR ELIGIBILITY
+
+Experience: Must have 3+ years of professional experience in their field.
+Availability: Must commit to at least 2 hours per month.
+Verification: Must provide a valid LinkedIn or GitHub URL that matches their application details.
+Role: Must currently hold a Senior, Lead, or Management role, OR demonstrate significant specialized expertise.
+
+MENTEE ELIGIBILITY
+Experience: Must have 1+ year of professional experience in their field.
+Goals: Must articulate 2-3 specific learning goals (e.g., "Learn System Design", "Transition to PM").
+Availability: Must commit to 1 hour per month for sessions + 2 hours for homework.
+Status: Open to all levels, including students and career switchers.
+
+MATCHING CRITERIA
+Skills must strictly match (e.g., do not match a Python Mentee with a Java Mentor unless the Mentor also knows Python).
+Time zones should be within 4 hours overlap unless both parties agree to async mentorship.

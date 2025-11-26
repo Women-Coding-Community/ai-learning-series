@@ -1,0 +1,8 @@
+google-generativeai>=0.3.0
+python-dotenv>=1.0.0
+streamlit>=1.28.0
+google-adk>=1.18.0
+python-dotenv>=1.0.0
+requests>=2.31.0
+beautifulsoup4>=4.12.2
+pandas>=2.3.3
