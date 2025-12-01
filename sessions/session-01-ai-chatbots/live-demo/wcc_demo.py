@@ -30,7 +30,7 @@ except Exception:
     pass
 
 # Configure Gemini API (done once at startup)
-api_key = os.getenv('AIzaSyDk2vG3HtQjbsnLs4xQlvRWhlFpWCISRPc') or "AIzaSyDk2vG3HtQjbsnLs4xQlvRWhlFpWCISRPc"
+api_key = os.getenv('API_KEY') or "API_KEY"
 genai.configure(api_key=api_key)
 
 

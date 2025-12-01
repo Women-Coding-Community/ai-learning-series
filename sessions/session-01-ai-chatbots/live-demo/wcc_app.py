@@ -30,7 +30,7 @@ except Exception:
     pass
 
 # Configure Gemini API (done once at startup)
-api_key = os.getenv('AIzaSyDk2vG3HtQjbsnLs4xQlvRWhlFpWCISRPc') or os.getenv("AIzaSyDk2vG3HtQjbsnLs4xQlvRWhlFpWCISRPc")
+api_key = os.getenv('API_KEY') or os.getenv("API_KEY")
 if api_key:
     genai.configure(api_key=api_key)
     print(f"✓ API configured: {bool(api_key)}")
