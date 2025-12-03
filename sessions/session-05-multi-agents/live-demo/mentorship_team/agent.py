@@ -16,12 +16,20 @@ Try:
 
 from google.adk.agents import LlmAgent
 from mentorship_team.tools.mentorship_tools import (
+    # State management tools
+    remember_user,
+    get_session_info,
+    save_favorite_mentor,
+    show_favorites,
+    clear_session_state,
+    # Intake tools
     save_profile,
     read_guidelines,
     list_profiles,
     verify_online_presence,
     find_mentors_by_skill,
     match_mentee,
+    # WCC website tools
     search_wcc_mentors,
     get_wcc_page_info,
     get_wcc_mentorship_overview,
@@ -86,21 +94,33 @@ When user wants a mentor:
 - `get_wcc_faq()` - Get FAQ from /mentorship-faq
 - `get_wcc_events()` - Get upcoming events from /events
 
+**🧠 STATE MANAGEMENT (Memory):**
+- `remember_user(name)` - Remember user's name for session
+- `get_session_info()` - Show what I remember (state)
+- `save_favorite_mentor(name)` - Save a mentor to favorites
+- `show_favorites()` - Show saved favorite mentors
+- `clear_session_state()` - Clear all memory
+
 💡 EXAMPLES:
+- "My name is Sarah" → remember_user("Sarah")
+- "What do you remember?" → get_session_info()
+- "Save Sarah Chen as favorite" → save_favorite_mentor("Sarah Chen")
+- "Show my favorites" → show_favorites()
+- "Forget everything" → clear_session_state()
 - "Show profiles" → list_profiles()
 - "Find Python mentors" → find_mentors_by_skill("Python")
 - "Search WCC for mentors" → search_wcc_mentors()
-- "Tell me about WCC mentorship" → get_wcc_mentorship_overview()
-- "What are the FAQs?" → get_wcc_faq()
-- "What events are coming up?" → get_wcc_events()
-- "Where can I help?" → get_wcc_events()
-- "Match Alex Kim" → match_mentee("Alex Kim")
-- "Register as mentor" → Start intake interview
 
 Always announce which specialist role you're acting as!
 Example: "🎯 Acting as Matching Specialist..."
 """,
     tools=[
+        # State management tools (demonstrates ADK statefulness)
+        remember_user,
+        get_session_info,
+        save_favorite_mentor,
+        show_favorites,
+        clear_session_state,
         # Intake tools
         save_profile,
         read_guidelines,
