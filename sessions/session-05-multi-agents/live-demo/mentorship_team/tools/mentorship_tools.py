@@ -6,6 +6,7 @@ import os
 import requests
 from bs4 import BeautifulSoup
 from typing import List
+from google.adk.tools import ToolContext
 
 # File paths relative to live-demo folder
 PROFILE_FILE = os.path.join(os.path.dirname(os.path.dirname(__file__)), "profiles.json")
@@ -16,6 +17,99 @@ WCC_MENTORS_URL = "https://www.womencodingcommunity.com/mentors"
 WCC_MENTORSHIP_URL = "https://www.womencodingcommunity.com/mentorship"
 WCC_FAQ_URL = "https://www.womencodingcommunity.com/mentorship-faq"
 WCC_EVENTS_URL = "https://www.womencodingcommunity.com/events"
+
+
+# =============================================================================
+# STATE MANAGEMENT TOOLS (Demonstrates ADK Statefulness)
+# =============================================================================
+
+def remember_user(name: str, tool_context: ToolContext) -> str:
+    """
+    Remember the current user's name for the session.
+    This demonstrates ADK state management - the name persists across messages.
+    
+    Args:
+        name: The user's name to remember
+    """
+    tool_context.state["user_name"] = name
+    tool_context.state["interaction_count"] = tool_context.state.get("interaction_count", 0) + 1
+    
+    return f"✅ Got it! I'll remember you as **{name}** for this session."
+
+
+def get_session_info(tool_context: ToolContext) -> str:
+    """
+    Show current session state - demonstrates what the agent remembers.
+    """
+    user_name = tool_context.state.get("user_name", "Not set")
+    interaction_count = tool_context.state.get("interaction_count", 0)
+    favorite_mentors = tool_context.state.get("favorite_mentors", [])
+    search_history = tool_context.state.get("search_history", [])
+    
+    result = ["🧠 **Session State:**\n"]
+    result.append(f"👤 **User:** {user_name}")
+    result.append(f"💬 **Interactions:** {interaction_count}")
+    
+    if favorite_mentors:
+        result.append(f"⭐ **Saved Mentors:** {', '.join(favorite_mentors)}")
+    else:
+        result.append("⭐ **Saved Mentors:** None yet")
+    
+    if search_history:
+        result.append(f"🔍 **Search History:** {', '.join(search_history[-5:])}")
+    else:
+        result.append("🔍 **Search History:** None yet")
+    
+    return "\n".join(result)
+
+
+def save_favorite_mentor(mentor_name: str, tool_context: ToolContext) -> str:
+    """
+    Save a mentor to your favorites list (persists in session state).
+    
+    Args:
+        mentor_name: Name of the mentor to save
+    """
+    if "favorite_mentors" not in tool_context.state:
+        tool_context.state["favorite_mentors"] = []
+    
+    if mentor_name not in tool_context.state["favorite_mentors"]:
+        tool_context.state["favorite_mentors"].append(mentor_name)
+        return f"⭐ Saved **{mentor_name}** to your favorites!"
+    else:
+        return f"ℹ️ **{mentor_name}** is already in your favorites."
+
+
+def show_favorites(tool_context: ToolContext) -> str:
+    """
+    Show your saved favorite mentors.
+    """
+    favorites = tool_context.state.get("favorite_mentors", [])
+    
+    if not favorites:
+        return "⭐ You haven't saved any favorite mentors yet.\n\nTry: \"Save Sarah Chen as a favorite\""
+    
+    result = ["⭐ **Your Favorite Mentors:**\n"]
+    for i, name in enumerate(favorites, 1):
+        result.append(f"  {i}. {name}")
+    
+    return "\n".join(result)
+
+
+def clear_session_state(tool_context: ToolContext) -> str:
+    """
+    Clear all session state (reset memory).
+    """
+    tool_context.state.clear()
+    return "🗑️ Session state cleared! I've forgotten everything."
+
+
+def add_to_search_history(query: str, tool_context: ToolContext) -> None:
+    """Internal: Track search history."""
+    if "search_history" not in tool_context.state:
+        tool_context.state["search_history"] = []
+    tool_context.state["search_history"].append(query)
+    tool_context.state["interaction_count"] = tool_context.state.get("interaction_count", 0) + 1
 
 
 # =============================================================================
@@ -321,10 +415,14 @@ def search_wcc_mentors(skill: str = "") -> str:
         )
         
         if mentor_elements:
-            for elem in mentor_elements[:10]:  # Limit to 10
+            for elem in mentor_elements[:20]:  # Check more elements
                 # Extract text content
                 name = elem.find(['h2', 'h3', 'h4', 'strong'])
-                name_text = name.get_text(strip=True) if name else "Unknown"
+                name_text = name.get_text(strip=True) if name else ""
+                
+                # Skip if no valid name (filter out "Unknown" and empty)
+                if not name_text or len(name_text) < 2:
+                    continue
                 
                 # Get description/bio
                 desc = elem.find('p')
@@ -334,7 +432,8 @@ def search_wcc_mentors(skill: str = "") -> str:
                 full_text = elem.get_text().lower()
                 if skill and skill.lower() not in full_text:
                     continue
-                    
+                
+                # Only add if we have a real name
                 mentors.append({
                     "name": name_text,
                     "description": desc_text
