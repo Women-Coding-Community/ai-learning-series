@@ -1,0 +1,47 @@
+# A2A Agent Card for Intake Specialist
+
+name: intake_specialist
+description: |
+  Handles new mentor and mentee registrations for the WCC Mentorship Program.
+  Collects profile information and saves to database.
+
+version: "1.0.0"
+
+capabilities:
+  - name: save_profile
+    description: Save a new mentor or mentee profile
+    input_schema:
+      type: object
+      required: [role, name, email, skills, availability, bio, linkedin_url]
+      properties:
+        role:
+          type: string
+          enum: [Mentor, Mentee]
+        name:
+          type: string
+        email:
+          type: string
+          format: email
+        skills:
+          type: array
+          items:
+            type: string
+        availability:
+          type: string
+        bio:
+          type: string
+        linkedin_url:
+          type: string
+          format: uri
+
+  - name: read_guidelines
+    description: Read program eligibility guidelines
+    output_schema:
+      type: string
+
+  - name: list_profiles
+    description: List all registered profiles
+    output_schema:
+      type: string
+
+model: gemini-2.0-flash

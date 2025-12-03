@@ -1,0 +1,84 @@
+# A2A Agent Card for Mentorship Team
+# Describes the multi-agent system capabilities
+
+name: mentorship_coordinator
+description: |
+  Multi-agent mentorship program coordinator that handles intake,
+  verification, and matching of mentors and mentees.
+
+version: "1.0.0"
+author: Women Coding Community
+
+# Capabilities advertised via A2A
+capabilities:
+  - name: register_user
+    description: Register a new mentor or mentee
+    input_schema:
+      type: object
+      properties:
+        role:
+          type: string
+          enum: [Mentor, Mentee]
+        name:
+          type: string
+        email:
+          type: string
+        skills:
+          type: array
+          items:
+            type: string
+
+  - name: verify_mentor
+    description: Verify a mentor's credentials
+    input_schema:
+      type: object
+      properties:
+        name:
+          type: string
+        linkedin_url:
+          type: string
+
+  - name: find_match
+    description: Find mentor matches for a mentee
+    input_schema:
+      type: object
+      properties:
+        mentee_name:
+          type: string
+
+  - name: search_mentors
+    description: Search mentors by skill
+    input_schema:
+      type: object
+      properties:
+        skill:
+          type: string
+
+# Sub-agents in this system
+sub_agents:
+  - name: intake_specialist
+    description: Collects and saves mentor/mentee profiles
+    capabilities:
+      - save_profile
+      - read_guidelines
+      - list_profiles
+
+  - name: verification_specialist
+    description: Verifies mentor credentials via LinkedIn/GitHub
+    capabilities:
+      - verify_online_presence
+      - list_profiles
+
+  - name: matching_specialist
+    description: Matches mentees with suitable mentors
+    capabilities:
+      - find_mentors_by_skill
+      - match_mentee
+      - list_profiles
+
+# Data storage
+data_stores:
+  - name: profiles
+    type: json_file
+    path: profiles.json
+    description: Stores mentor and mentee profiles

@@ -1,0 +1,23 @@
+--- WCC MENTORSHIP PROGRAM GUIDELINES ---
+
+MENTOR ELIGIBILITY
+- Experience: 3+ years professional experience
+- Availability: 2+ hours per month
+- Verification: Valid LinkedIn or GitHub profile
+- Role: Senior, Lead, or specialized expertise
+
+MENTEE ELIGIBILITY
+- Experience: 1+ year (students welcome)
+- Goals: 2-3 specific learning goals
+- Availability: 1 hour/month sessions + 2 hours homework
+- Status: Open to all levels and career switchers
+
+MATCHING CRITERIA
+- Skills must align (e.g., Python mentee → Python mentor)
+- Time zones within 4 hours overlap preferred
+- Both parties must agree to the match
+
+PROGRAM STRUCTURE
+- 3-month commitment minimum
+- Monthly check-ins with coordinator
+- Feedback surveys after each session
