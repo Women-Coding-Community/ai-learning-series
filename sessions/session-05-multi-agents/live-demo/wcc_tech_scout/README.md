@@ -101,8 +101,7 @@ wcc_tech_scout/
 ├── editor.py               # Editor agent with MCP FileSystem
 ├── pipeline.py             # A2A orchestration script
 ├── mcp_config.json         # MCP server configuration
-└── output/                 # Where reports are saved
-    └── .gitkeep
+└── .reports/               # Where reports are saved (hidden from ADK)
 ```
 
 ---

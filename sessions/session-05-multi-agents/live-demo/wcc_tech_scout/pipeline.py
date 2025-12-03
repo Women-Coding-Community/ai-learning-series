@@ -153,10 +153,10 @@ compiled by the WCC Tech Scout multi-agent system.
     print("\n" + "=" * 60)
     print("✅ PIPELINE COMPLETE")
     print("=" * 60)
-    print(f"\n📄 Report saved as: output/{filename}")
+    print(f"\n📄 Report saved as: .reports/{filename}")
     print(f"⏰ Completed: {datetime.now().strftime('%Y-%m-%d %H:%M:%S')}")
     
-    return f"Pipeline complete! Report saved to output/{filename}"
+    return f"Pipeline complete! Report saved to .reports/{filename}"
 
 
 def run_interactive():

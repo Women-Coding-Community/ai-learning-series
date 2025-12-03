@@ -29,7 +29,8 @@ load_dotenv()
 # For this demo, we simulate MCP file operations to show the pattern.
 
 # Output directory for reports
-OUTPUT_DIR = os.path.join(os.path.dirname(__file__), "output")
+# Using .reports (hidden folder) to prevent ADK from detecting it as an agent
+OUTPUT_DIR = os.path.join(os.path.dirname(__file__), ".reports")
 os.makedirs(OUTPUT_DIR, exist_ok=True)
 
 
