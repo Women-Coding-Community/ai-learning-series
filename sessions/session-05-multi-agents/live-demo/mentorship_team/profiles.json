@@ -1,0 +1,42 @@
+[
+  {
+    "role": "Mentor",
+    "name": "Sarah Chen",
+    "email": "sarah@example.com",
+    "skills": ["Python", "Machine Learning", "Data Science"],
+    "availability": "4 hours/month",
+    "bio": "Senior ML Engineer at Google, 8 years experience",
+    "linkedin_url": "https://linkedin.com/in/sarahchen",
+    "status": "Verified"
+  },
+  {
+    "role": "Mentor",
+    "name": "James Wilson",
+    "email": "james@example.com",
+    "skills": ["JavaScript", "React", "Node.js"],
+    "availability": "2 hours/month",
+    "bio": "Tech Lead at Spotify, 6 years experience",
+    "linkedin_url": "https://linkedin.com/in/jameswilson",
+    "status": "Verified"
+  },
+  {
+    "role": "Mentor",
+    "name": "Maria Garcia",
+    "email": "maria@example.com",
+    "skills": ["Product Management", "Agile", "User Research"],
+    "availability": "3 hours/month",
+    "bio": "Senior PM at Microsoft, 5 years experience",
+    "linkedin_url": "https://linkedin.com/in/mariagarcia",
+    "status": "Pending Verification"
+  },
+  {
+    "role": "Mentee",
+    "name": "Alex Kim",
+    "email": "alex@example.com",
+    "skills": ["Python", "Data Science"],
+    "availability": "3 hours/month",
+    "bio": "Junior Developer looking to transition to ML",
+    "linkedin_url": "https://linkedin.com/in/alexkim",
+    "status": "Active"
+  }
+]

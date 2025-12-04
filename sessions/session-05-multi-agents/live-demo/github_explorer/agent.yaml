@@ -1,0 +1,86 @@
+# A2A Agent Card for GitHub Explorer Team
+# This file describes the agent's capabilities for A2A discovery
+# Reference: https://google.github.io/A2A/
+
+name: github_explorer_team
+description: |
+  A multi-agent system that explores GitHub repositories and creates reports.
+  Demonstrates ADK, A2A, and MCP concepts working together.
+
+version: "1.0.0"
+author: Women Coding Community
+
+# Agent capabilities advertised via A2A
+capabilities:
+  - name: search_github
+    description: Search GitHub repositories by keyword
+    input_schema:
+      type: object
+      properties:
+        query:
+          type: string
+          description: Search keywords
+        language:
+          type: string
+          description: Programming language filter
+  
+  - name: get_repo_info
+    description: Get detailed information about a repository
+    input_schema:
+      type: object
+      properties:
+        owner:
+          type: string
+          description: Repository owner
+        repo:
+          type: string
+          description: Repository name
+  
+  - name: read_file
+    description: Read a file from a GitHub repository
+    input_schema:
+      type: object
+      properties:
+        owner:
+          type: string
+        repo:
+          type: string
+        path:
+          type: string
+          description: File path (e.g., README.md)
+  
+  - name: create_report
+    description: Research a topic and create a formatted report
+    input_schema:
+      type: object
+      properties:
+        topic:
+          type: string
+          description: What to research and report on
+
+# Sub-agents in this system
+sub_agents:
+  - name: github_researcher
+    description: Finds information from GitHub repositories
+    capabilities:
+      - search_repositories
+      - get_repository_info
+      - get_file_contents
+      - list_organization_repos
+  
+  - name: report_writer
+    description: Creates polished reports from research findings
+    capabilities:
+      - write_report
+
+# A2A endpoint configuration (for production deployment)
+# endpoint:
+#   url: https://your-deployment.run.app/a2a
+#   authentication: bearer_token
+
+# MCP tools this agent can use
+mcp_tools:
+  - server: github
+    description: GitHub API access (simulated in demo)
+  - server: filesystem
+    description: File system access for saving reports

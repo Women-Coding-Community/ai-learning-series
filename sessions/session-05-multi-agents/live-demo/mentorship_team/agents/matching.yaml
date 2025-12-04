@@ -1,0 +1,42 @@
+# A2A Agent Card for Matching Specialist
+
+name: matching_specialist
+description: |
+  Matches mentees with suitable mentors based on skills and goals.
+  Can search by specific skill or run full matching for a mentee.
+
+version: "1.0.0"
+
+capabilities:
+  - name: find_mentors_by_skill
+    description: Search for mentors with a specific skill
+    input_schema:
+      type: object
+      required: [skill]
+      properties:
+        skill:
+          type: string
+          description: The skill to search for
+    output_schema:
+      type: string
+      description: List of matching mentors
+
+  - name: match_mentee
+    description: Find all matching mentors for a registered mentee
+    input_schema:
+      type: object
+      required: [mentee_name]
+      properties:
+        mentee_name:
+          type: string
+          description: Name of the registered mentee
+    output_schema:
+      type: string
+      description: Matching report with suitable mentors
+
+  - name: list_profiles
+    description: List all registered profiles
+    output_schema:
+      type: string
+
+model: gemini-2.0-flash

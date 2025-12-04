@@ -1,0 +1,33 @@
+# A2A Agent Card for Verification Specialist
+
+name: verification_specialist
+description: |
+  Verifies mentor credentials by checking their LinkedIn or GitHub profiles.
+  Updates profile status after verification.
+
+version: "1.0.0"
+
+capabilities:
+  - name: verify_online_presence
+    description: Verify a mentor's online presence
+    input_schema:
+      type: object
+      required: [linkedin_url, name, company]
+      properties:
+        linkedin_url:
+          type: string
+          format: uri
+        name:
+          type: string
+        company:
+          type: string
+    output_schema:
+      type: string
+      description: Verification result message
+
+  - name: list_profiles
+    description: List all registered profiles
+    output_schema:
+      type: string
+
+model: gemini-2.0-flash

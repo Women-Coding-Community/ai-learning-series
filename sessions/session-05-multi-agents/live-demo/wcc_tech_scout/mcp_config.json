@@ -1,0 +1,30 @@
+{
+  "mcpServers": {
+    "filesystem-server": {
+      "command": "npx",
+      "args": [
+        "-y",
+        "@anthropic/mcp-filesystem",
+        "./output"
+      ],
+      "description": "MCP server for file system access. Allows agents to read/write files in the output directory."
+    }
+  },
+  "notes": {
+    "what_is_mcp": "Model Context Protocol (MCP) is a standard for connecting AI models to external data and tools.",
+    "why_use_mcp": "MCP prevents vendor lock-in. A tool written for one AI system works with any MCP-compatible system.",
+    "analogy": "MCP is like USB-C for AI - a universal connector for tools and data.",
+    "production_setup": {
+      "step1": "Install MCP server: npm install -g @anthropic/mcp-filesystem",
+      "step2": "Configure in your agent's mcp_servers parameter",
+      "step3": "The agent can now use file operations through MCP"
+    },
+    "available_mcp_servers": [
+      "filesystem - Read/write local files",
+      "github - Access GitHub repositories",
+      "google-drive - Access Google Drive files",
+      "slack - Send messages to Slack",
+      "postgres - Query PostgreSQL databases"
+    ]
+  }
+}

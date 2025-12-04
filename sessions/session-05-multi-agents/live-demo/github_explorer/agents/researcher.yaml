@@ -1,0 +1,78 @@
+# A2A Agent Card for GitHub Researcher
+# This agent specializes in finding information from GitHub
+
+name: github_researcher
+description: |
+  Specialized agent for searching and retrieving information from GitHub.
+  Uses MCP-style tools to access GitHub API.
+
+version: "1.0.0"
+
+# What this agent can do (advertised via A2A)
+capabilities:
+  - name: search_repositories
+    description: Search GitHub repositories by keyword and language
+    input_schema:
+      type: object
+      properties:
+        query:
+          type: string
+          description: Search keywords
+        language:
+          type: string
+          description: Optional programming language filter
+    output_schema:
+      type: string
+      description: Formatted search results
+
+  - name: get_repository_info
+    description: Get detailed information about a specific repository
+    input_schema:
+      type: object
+      properties:
+        owner:
+          type: string
+          description: Repository owner (e.g., "Women-Coding-Community")
+        repo:
+          type: string
+          description: Repository name (e.g., "ai-learning-series")
+    output_schema:
+      type: string
+      description: Repository details including stats, description, links
+
+  - name: get_file_contents
+    description: Read contents of a file from a repository
+    input_schema:
+      type: object
+      properties:
+        owner:
+          type: string
+        repo:
+          type: string
+        path:
+          type: string
+          description: File path (default README.md)
+    output_schema:
+      type: string
+      description: File contents
+
+  - name: list_organization_repos
+    description: List all repositories for a GitHub organization
+    input_schema:
+      type: object
+      properties:
+        org:
+          type: string
+          description: Organization name
+    output_schema:
+      type: string
+      description: List of repositories with descriptions
+
+# Model configuration
+model: gemini-2.0-flash
+
+# Instructions for this agent
+instruction: |
+  You are the GitHub Researcher, specialized in finding information from GitHub.
+  Use your tools to search repositories, get details, and read files.
+  Present findings in a structured format for the Writer agent.
