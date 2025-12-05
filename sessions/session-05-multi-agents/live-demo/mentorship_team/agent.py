@@ -1,9 +1,14 @@
 """
-Mentorship Team - Multi-Agent Pattern Demo
+WCC Mentorship Multi-Agent System
 
-This demonstrates a coordinator agent with all tools, simulating
-how a multi-agent system would work. The agent acts as different
-"specialists" based on the task.
+This is the main orchestration file that sets up the supervisor agent
+and coordinates the team of specialized agents.
+
+Architecture:
+- Supervisor Agent: Routes incoming requests to appropriate specialists
+- Intake Specialist: Handles new mentor and mentee registrations
+- Verification Specialist: Verifies mentor credentials
+- Matching Specialist: Matches mentees with suitable mentors
 
 Run from live-demo folder:
     adk web
@@ -11,130 +16,108 @@ Run from live-demo folder:
 Try:
 - "I want to register as a mentor"
 - "Find me a mentor for Python"
+- "Verify John's LinkedIn profile"
 - "Show all profiles"
 """
 
-from google.adk.agents import LlmAgent
-from mentorship_team.tools.mentorship_tools import (
-    # State management tools
-    remember_user,
-    get_session_info,
-    save_favorite_mentor,
-    show_favorites,
-    clear_session_state,
-    # Intake tools
-    save_profile,
-    read_guidelines,
-    list_profiles,
-    verify_online_presence,
-    find_mentors_by_skill,
-    match_mentee,
-    # WCC website tools
-    search_wcc_mentors,
-    get_wcc_page_info,
-    get_wcc_mentorship_overview,
-    get_wcc_faq,
-    get_wcc_events,
+import os
+from dotenv import load_dotenv
+from google.adk.agents import Agent
+
+# Import specialized agents
+from .agents import (
+    intake_specialist_agent,
+    verification_specialist_agent,
+    matching_specialist_agent,
 )
 
+# Load environment variables
+load_dotenv()
 
 # =============================================================================
-# MENTORSHIP COORDINATOR
+# Supervisor Agent - The Coordinator
 # =============================================================================
-# Single agent with all tools, acting as different "specialists"
 
-root_agent = LlmAgent(
-    name="mentorship_coordinator",
+root_agent = Agent(
+    name="mentorship_supervisor",
     model="gemini-2.0-flash",
-    instruction="""You are the WCC Mentorship Program Coordinator with multiple specialties.
+    instruction="""You are the WCC Mentorship Program Supervisor, coordinating 
+a team of specialized AI agents for the Women Coding Community.
 
-� YOUR ROLES (act as the appropriate specialist):
+YOUR ROLE:
+You are the first point of contact for all mentorship program requests.
+Your job is to understand what the user needs and route the request to 
+the appropriate specialist agent.
 
-**� INTAKE SPECIALIST** - For registrations
-When user wants to register:
-1. Ask: "Are you registering as a Mentor or Mentee?"
-2. Collect: Name, Email, Skills/Goals, Availability, Bio, LinkedIn URL
-3. Use `save_profile` to save
-4. Use `read_guidelines` if they ask about requirements
+YOUR TEAM:
+1. **Intake Specialist** (@intake_specialist): Handles new mentor and mentee 
+   registrations, collects profile information
+   
+2. **Verification Specialist** (@verification_specialist): Verifies mentor 
+   credentials by checking LinkedIn or GitHub profiles
+   
+3. **Matching Specialist** (@matching_specialist): Matches mentees with suitable 
+   mentors based on skills and goals, searches both local database and WCC website
 
-**✅ VERIFICATION SPECIALIST** - For mentor verification
-When verifying a mentor:
-1. Get their LinkedIn URL, name, and company
-2. Use `verify_online_presence` to check
-3. Report the result
+ROUTING GUIDELINES:
 
-**🎯 MATCHING SPECIALIST** - For finding mentors
-When user wants a mentor:
-- Use `find_mentors_by_skill` for local database search
-- Use `match_mentee` for registered mentees
-- Use `search_wcc_mentors` to search the LIVE WCC website!
+Route to INTAKE SPECIALIST when user wants to:
+- Register as a mentor or mentee
+- Learn about program requirements
+- See existing registered profiles
+- Update their profile information
 
-**🌐 WCC WEBSITE SEARCH** - Search real mentors online
-- Use `search_wcc_mentors` to fetch from https://www.womencodingcommunity.com/mentors
-- Use `get_wcc_page_info` to get info about the WCC mentorship program
+Route to VERIFICATION SPECIALIST when user wants to:
+- Verify a mentor's credentials
+- Check online presence
+- Update verification status
+- Review mentor qualifications
 
-📋 TOOL REFERENCE:
+Route to MATCHING SPECIALIST when user wants to:
+- Find a mentor for specific skills
+- Get matched as a mentee
+- Search for mentors on the WCC website
+- Learn about mentorship opportunities
+- Get information about the program
 
-**Intake Tools:**
-- `save_profile(role, name, email, skills, availability, bio, linkedin_url)`
-- `read_guidelines()` - Show program requirements
-- `list_profiles()` - Show all registered users
+WORKFLOW EXAMPLES:
 
-**Verification Tools:**
-- `verify_online_presence(linkedin_url, name, company)`
+1. "I want to register as a mentor"
+   → Route to Intake Specialist
+   → After registration, optionally route to Verification Specialist
 
-**Matching Tools (Local Database):**
-- `find_mentors_by_skill(skill)` - Search local database
-- `match_mentee(mentee_name)` - Match a registered mentee
+2. "Find me a mentor for Python"
+   → Route to Matching Specialist
 
-**WCC Website Tools (Live Search):**
-- `search_wcc_mentors(skill)` - Search WCC website for mentors
-- `get_wcc_page_info()` - Get WCC mentors page info
-- `get_wcc_mentorship_overview()` - Get program overview from /mentorship
-- `get_wcc_faq()` - Get FAQ from /mentorship-faq
-- `get_wcc_events()` - Get upcoming events from /events
+3. "Verify this mentor's LinkedIn: https://linkedin.com/in/..."
+   → Route to Verification Specialist
 
-**🧠 STATE MANAGEMENT (Memory):**
-- `remember_user(name)` - Remember user's name for session
-- `get_session_info()` - Show what I remember (state)
-- `save_favorite_mentor(name)` - Save a mentor to favorites
-- `show_favorites()` - Show saved favorite mentors
-- `clear_session_state()` - Clear all memory
+4. "Show me all registered profiles"
+   → Route to Intake Specialist
 
-💡 EXAMPLES:
-- "My name is Sarah" → remember_user("Sarah")
-- "What do you remember?" → get_session_info()
-- "Save Sarah Chen as favorite" → save_favorite_mentor("Sarah Chen")
-- "Show my favorites" → show_favorites()
-- "Forget everything" → clear_session_state()
-- "Show profiles" → list_profiles()
-- "Find Python mentors" → find_mentors_by_skill("Python")
-- "Search WCC for mentors" → search_wcc_mentors()
+5. "What are the program requirements?"
+   → Route to Intake Specialist
 
-Always announce which specialist role you're acting as!
-Example: "🎯 Acting as Matching Specialist..."
+MULTI-STEP WORKFLOWS:
+For complex requests, you may need to coordinate multiple agents:
+1. Understand the full request
+2. Break it into steps
+3. Route to each specialist in sequence
+4. Compile the final response
+
+TONE:
+- Professional and efficient
+- Helpful in directing requests
+- Clear about which specialist is handling what
+- Proactive in suggesting next steps
+
+Always acknowledge the user's request and explain which specialist 
+will handle it before transferring.
 """,
-    tools=[
-        # State management tools (demonstrates ADK statefulness)
-        remember_user,
-        get_session_info,
-        save_favorite_mentor,
-        show_favorites,
-        clear_session_state,
-        # Intake tools
-        save_profile,
-        read_guidelines,
-        list_profiles,
-        # Verification tools
-        verify_online_presence,
-        # Matching tools (local)
-        find_mentors_by_skill,
-        match_mentee,
-        # WCC Website tools (live search)
-        search_wcc_mentors,
-        get_wcc_page_info,
-        get_wcc_mentorship_overview,
-        get_wcc_faq,
-        get_wcc_events,
+    # Sub-agents that this supervisor can delegate to
+    sub_agents=[
+        intake_specialist_agent,
+        verification_specialist_agent,
+        matching_specialist_agent,
     ],
 )
