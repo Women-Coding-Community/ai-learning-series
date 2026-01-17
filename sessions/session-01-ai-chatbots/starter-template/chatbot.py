@@ -81,7 +81,7 @@ class SimpleBot:
 
 def main():
     """Main function to run the chatbot"""
-    print("🤖 Welcome to the Simple Chatbot!")
+    print("HEY! Welcome to the Simple Chatbot!")
     print("Type 'quit' to exit, 'clear' to clear history\n")
 
     # Create bot with optional system prompt
@@ -96,7 +96,7 @@ def main():
                 continue
 
             if user_input.lower() == "quit":
-                print("Goodbye! 👋")
+                print("Goodbye! ")
                 break
 
             if user_input.lower() == "clear":
@@ -109,7 +109,7 @@ def main():
             print(f"\nBot: {response}\n")
 
         except KeyboardInterrupt:
-            print("\n\nGoodbye! 👋")
+            print("\n\nGoodbye! ")
             break
 
 
