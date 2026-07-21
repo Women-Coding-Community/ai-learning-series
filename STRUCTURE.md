@@ -3,7 +3,7 @@
 ## Complete Directory Layout
 
 ```text
-wcc-ai-learning-series/
+ai-learning-series/
 │
 ├── README.md                                    # Main repository overview
 ├── STRUCTURE.md                                 # This file
@@ -11,209 +11,102 @@ wcc-ai-learning-series/
 ├── getting-started/                             # Setup & onboarding guides
 │   ├── gcp-setup.md                            # GCP project & Vertex AI setup
 │   ├── vertex-ai-quickstart.md                 # First API call tutorial
+│   ├── gemini-api-key-setup.md                 # Gemini API key setup
 │   ├── python-environment.md                   # Python venv & dependencies
 │   └── alternative-platforms.md                # AWS, Azure, OpenAI guides
 │
 ├── sessions/                                    # Session materials
-│   ├── session-01-ai-chatbots/                 # Session 1: AI Fundamentals & LLM APIs
-│   │   ├── README.md                           # Session overview & learning objectives
-│   │   ├── slides.pdf                          # Presentation slides (to be added)
-│   │   │
-│   │   ├── live-demo/                          # Code from live session
-│   │   │   ├── basic_chatbot.py               # (to be added)
-│   │   │   ├── chatbot_with_memory.py         # (to be added)
-│   │   │   └── requirements.txt               # (to be added)
-│   │   │
-│   │   ├── starter-template/                   # Template for participants
-│   │   │   ├── chatbot.py                     # Basic chatbot implementation
-│   │   │   ├── requirements.txt               # Dependencies
-│   │   │   └── README.md                      # Quick start guide
-│   │   │
-│   │   ├── use-case-guides/                    # Detailed implementation guides
-│   │   │   ├── wcc-info-bot.md                # WCC Info Bot guide
-│   │   │   └── wcc-info-bot-advanced.md       # (to be added)
-│   │   │
-│   │   └── participants/                       # Participant submissions
-│   │       ├── username1/
-│   │       │   ├── code/
-│   │       │   ├── README.md
-│   │       │   └── demo.mp4
-│   │       └── username2/
 │   │
-│   ├── session-02-prompt-security/             # Session 2: Prompt Engineering & Security
-│   ├── session-03-rag/                         # Session 3: Introduction to RAG
-│   ├── session-04-agents-1/                    # Session 4: AI Agents - Part 1
-│   ├── session-05-agents-2/                    # Session 5: AI Agents - Part 2
-│   └── session-06-evaluation/                  # Session 6: Evaluation & Monitoring
+│   ├── session-01-agent-skill/                 # 2026 · Session 1: Build Your Own Agent Skill
+│   ├── session-02-tools-boundaries/            # 2026 · Session 2: MCP, Plugins, Permissions, Hooks
+│   ├── session-03-small-models/                # 2026 · Session 3: Small Models in Practice
+│   ├── session-04-sub-agents/                  # 2026 · Session 4: Sub-Agents & Specialisation
+│   ├── session-05-sdlc-cicd/                   # 2026 · Session 5: AI in the SDLC & CI/CD
+│   ├── session-06-loop-engineering/            # 2026 · Session 6: Loop Engineering + Demo Day
+│   │   ├── README.md                           # Session overview & learning objectives
+│   │   ├── live-demo/                          # Code from live session
+│   │   ├── starter-template/                   # Template for participants
+│   │   └── participants/                       # Participant submissions
+│   │       └── [username]/
+│   │           ├── code/
+│   │           ├── README.md
+│   │           └── demo.mp4
+│   │
+│   └── 2025 archive (Foundational Track, delivered)
+│       ├── session-01-ai-chatbots/             # AI Fundamentals & LLM APIs
+│       ├── session-02-prompt-eng/              # Prompt Engineering
+│       ├── session-03-rag/                     # Introduction to RAG
+│       ├── session-04-ai-agent/                # AI Agents - Part 1
+│       ├── session-05-multi-agents/            # AI Agents - Part 2 / Multi-Agents
+│       └── session-06-deploy-agent/            # Evaluation, Monitoring & Deployment
 │
-├── resources/                                   # Reference materials
-│   ├── gcp-vertex-ai-cheatsheet.md            # (to be added)
-│   ├── prompt-engineering-guide.md             # Prompt engineering best practices
-│   ├── security-checklist.md                   # Security best practices
-│   ├── troubleshooting.md                      # Common issues & solutions
-│   └── reading-list.md                         # Learning resources & references
+├── resources/                                   # Cross-session reference material
+│   ├── prompt-engineering-guide.md
+│   ├── security-checklist.md
+│   ├── troubleshooting.md
+│   └── reading-list.md
+│
+├── utilities/                                   # Shared scripts/helpers
+│   ├── function_calling.py
+│   ├── gcp_dlp_safety_pipeline.py
+│   ├── safety_pipeline_multilayer.py
+│   └── token_counter.py
 │
 └── badges/                                      # Participation tracking
-    ├── badge-criteria.md                       # Badge requirements & grading
-    └── badge-images/                           # Badge images (to be added)
+    └── badge-criteria.md                       # Badge requirements & grading
 ```
 
-## File Status
+## 2026: The Harness Series
 
-### ✅ Completed Files
+The 2025 run delivered the 6-session Foundational Track (chatbots → deployment). The planned 6-session Advanced Track from that original 12-week plan was never delivered. Rather than pick that plan back up, 2026 restarts the series as **The Harness Series**: a new 6-session run building an agent's harness piece by piece, then closing the loop. See the [root README](README.md) for the full run and [`WCC-Harness-files/wcc-harness-series-outline-v1.md`](WCC-Harness-files/wcc-harness-series-outline-v1.md) for the detailed session-by-session outline this repo structure is built from.
 
-**Root Level:**
+### File status
 
-- `README.md` - Main overview with program details
+**Complete for 2026 launch:**
 
-**Getting Started:**
+- `README.md` — updated with The Harness Series overview, run table, and 2025 series archived below
+- `STRUCTURE.md` — this file
+- `sessions/session-01-agent-skill/` through `sessions/session-06-loop-engineering/` — README + `live-demo/`, `starter-template/`, `participants/` scaffolding for all 6 sessions
+- `badges/badge-criteria.md` — updated with 2026 Harness Series badge, 2025 track archived
 
-- `getting-started/gcp-setup.md` - Complete GCP setup guide
-- `getting-started/vertex-ai-quickstart.md` - API quickstart
-- `getting-started/python-environment.md` - Python setup
-- `getting-started/alternative-platforms.md` - Platform alternatives
+**To be added per session, as each one is delivered:**
 
-**Session 1:**
+- `live-demo/` code and configs (populated after each live session)
+- `starter-template/` starting points (populated ahead of each session)
+- Session-specific `use-case-guides/` if a session needs them
 
-- `sessions/session-01-ai-chatbots/README.md` - Session overview
-- `sessions/session-01-ai-chatbots/starter-template/chatbot.py` - Basic chatbot
-- `sessions/session-01-ai-chatbots/starter-template/requirements.txt` - Dependencies
-- `sessions/session-01-ai-chatbots/starter-template/README.md` - Template guide
-- `sessions/session-01-ai-chatbots/use-case-guides/wcc-info-bot.md` - WCC Info Bot guide
-- `sessions/session-01-ai-chatbots/use-case-guides/career-quick-coach.md` - Career Coach guide
-- `sessions/session-01-ai-chatbots/use-case-guides/code-buddy.md` - Code Buddy guide
+**Not yet updated for 2026 tooling:**
 
-**Resources:**
-
-- `resources/prompt-engineering-guide.md` - Prompt engineering guide
-- `resources/security-checklist.md` - Security best practices
-- `resources/troubleshooting.md` - Troubleshooting guide
-- `resources/reading-list.md` - Learning resources
-
-**Badges:**
-
-- `badges/badge-criteria.md` - Badge system & criteria
-
-### 📝 To Be Added
-
-**Session 1 Live Demo:**
-
-- `sessions/session-01-ai-chatbots/live-demo/basic_chatbot.py`
-- `sessions/session-01-ai-chatbots/live-demo/chatbot_with_memory.py`
-- `sessions/session-01-ai-chatbots/live-demo/requirements.txt`
-
-**Session 1 Additional:**
-
-- `sessions/session-01-ai-chatbots/slides.pdf`
-- `sessions/session-01-ai-chatbots/use-case-guides/wcc-info-bot-advanced.md`
-
-**Resources:**
-
-- `resources/gcp-vertex-ai-cheatsheet.md`
-
-**Badges:**
-
-- `badges/badge-images/` - Badge image files
-
-**Future Sessions:**
-
-- Session 2-6 folder structures (ready to be populated)
-
----
+- `getting-started/` guides still assume Gemini API key + GCP as the only path; Antigravity (IDE + CLI), Claude Code, and Google ADK setup notes are pending
 
 ## Quick Navigation
 
 ### For Participants
 
-- **Getting Started:** `getting-started/` - Setup guides
-- **Session Materials:** `sessions/session-01-ai-chatbots/` - Starter template & guides
-- **Resources:** `resources/` - Reference materials
-- **Badges:** `badges/badge-criteria.md` - Participation tracking
+- **Getting Started:** `getting-started/` — Setup guides (API keys, Antigravity, Claude Code, ADK)
+- **Session Materials:** `sessions/session-01-agent-skill/` — Start of the 2026 run
+- **Resources:** `resources/` — Reference materials
+- **Badges:** `badges/badge-criteria.md` — Participation tracking
 
 ### For Instructors
 
-- **Session Overview:** `sessions/session-01-ai-chatbots/README.md`
-- **Live Demo Code:** `sessions/session-01-ai-chatbots/live-demo/`
-- **Starter Template:** `sessions/session-01-ai-chatbots/starter-template/`
-- **Use Case Guides:** `sessions/session-01-ai-chatbots/use-case-guides/`
-- **Participant Submissions:** `sessions/session-01-ai-chatbots/participants/`
-
----
-
-## Key Features
-
-### 📚 Comprehensive Documentation
-
-- Setup guides for GCP, Python, and alternatives
-- Detailed session materials with learning objectives
-- Use case guides with step-by-step implementation
-- Troubleshooting guide for common issues
-
-### 🛠️ Ready-to-Use Templates
-
-- Starter chatbot code with conversation memory
-- Error handling and best practices
-- Requirements.txt for easy setup
-- Clear README with quick start instructions
-
-### 🎓 Learning Resources
-
-- Prompt engineering best practices
-- Security checklist for AI applications
-- Curated reading list with links
-- Badge system for participation tracking
-
-### 🤝 Community-Focused
-
-- Participant submission structure
-- Collaboration guidelines
-- Badge system for motivation
-- Multiple use case options
-
----
-
-## Getting Started
-
-### For New Participants
-
-1. Read `README.md` for overview
-2. Follow `getting-started/gcp-setup.md`
-3. Complete `getting-started/python-environment.md`
-4. Try `getting-started/vertex-ai-quickstart.md`
-5. Use `sessions/session-01-ai-chatbots/starter-template/`
-
-### For Instructors
-
-1. Review `sessions/session-01-ai-chatbots/README.md`
-2. Prepare slides (add to `slides.pdf`)
-3. Review starter template and use case guides
-4. Set up participant submission folders
-5. Share resources from `resources/` folder
-
----
+- **Session Overview:** `sessions/session-0X-.../README.md`
+- **Live Demo Code:** `sessions/session-0X-.../live-demo/`
+- **Starter Template:** `sessions/session-0X-.../starter-template/`
+- **Participant Submissions:** `sessions/session-0X-.../participants/`
 
 ## Session Timeline
 
-| Session | Date | Topic | Status |
-|---------|------|-------|--------|
-| 1 | Nov 5, 2025 | AI Fundamentals & LLM APIs | ✅ Ready |
-| 2 | Nov 19, 2025 | Prompt Engineering & Security | 📋 Planned |
-| 3 | Dec 3, 2025 | Introduction to RAG | 📋 Planned |
-| 4 | Dec 17, 2025 | AI Agents - Part 1 | 📋 Planned |
-| 5 | Jan 7, 2026 | AI Agents - Part 2 | 📋 Planned |
-| 6 | Jan 21, 2026 | Evaluation & Monitoring | 📋 Planned |
+| # | Session | Level | Status |
+|---|---------|-------|--------|
+| 1 | From Prompts to Harness: Build Your Own Agent Skill | Entry-level friendly | 📋 Dates TBC |
+| 2 | Tools & Boundaries: MCP, Plugins, Permissions, Hooks | All levels | 📋 Dates TBC |
+| 3 | Small Models in Practice | All levels | 📋 Dates TBC |
+| 4 | Sub-Agents & Specialisation | Intermediate | 📋 Dates TBC |
+| 5 | AI in the SDLC & CI/CD | Intermediate | 📋 Dates TBC |
+| 6 | Loop Engineering + Demo Day | Advanced, community showcase | 📋 Dates TBC |
 
----
-
-## Contributing
-
-To add content:
-
-1. Create files in appropriate folders
-2. Follow existing documentation style
-3. Include clear examples and instructions
-4. Test code before committing
-5. Submit PR with description
+Dates lock to the 3rd Tuesday of every month once the first date is confirmed. Watch [#ai-learning-series](https://womencodingcommunity.slack.com/archives/C09L9C3FJP7) and [Meetup](https://www.meetup.com/women-coding-community/).
 
 ---
 
@@ -226,5 +119,5 @@ To add content:
 
 ---
 
-**Last Updated:** November 2025  
+**Last Updated:** July 2026
 **Repository:** Women Coding Community - AI Learning Series

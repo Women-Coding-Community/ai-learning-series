@@ -1,109 +1,78 @@
-# Women Coding Community - AI Learning Series 2025
+# Women Coding Community - AI Learning Series
 
-Welcome to the **WCC AI Learning Series**! This repository contains hands-on resources, code templates, and project guides for our 12-week AI learning program.
-
-## 🎯 Program Overview
-
-**Format:** 12 sessions total (6 Foundational + 6 Advanced)  
-**Duration:** 60 minutes each  
-**Schedule:** Every other Wednesday, starting November 5th, 2025  
-**Target Audience:** Coders with no/basic AI knowledge  
-**Delivery:** Hands-on, project-based learning  
-**Certification:** GitHub-tracked participation badges
-
-### Timeline
-
-- **Foundational Track:** Nov 5 - Dec 10 (6 weeks)
-- **Break:** Last week of January (feedback & planning)
-- **Advanced Track:** TBD (6 weeks)
+This repository contains hands-on resources, code templates, and project guides for the **WCC AI Learning Series**.
 
 ---
 
-## 🛠️ Tech Stack
+## 🔥 Current Series: The Harness Series
 
-### Primary Stack (Recommended)
+**Working title:** *Stop Prompting, Start Delegating*
 
-- **Language:** Python 3.11+
-- **Cloud Platform:** Google Cloud Platform (GCP)
-- **AI Platform:** Vertex AI / Gemini API
-- **Development:** Jupyter Notebooks, VS Code, Google Colab
+Women Coding Community presents the AI Learning Series: one hands-on session a month, no heavy slides, real tools and real code you can use at work.
 
-### Alternative Options (Participants' Choice)
+Over six months we build an agent's **harness** from the ground up, the instructions, skills, tools and guardrails that turn a capable model into an agent that does your work, then we close the **loop** so your agents run while you sleep.
 
-- **Cloud:** AWS (Bedrock, SageMaker), Azure (OpenAI Service)
-- **AI APIs:** OpenAI GPT, Anthropic Claude
+**Format:** 6 sessions, one per month
+**Cadence:** 3rd Tuesday of every month
+**Delivery:** Hands-on, live-build, minimal slides
+**Facilitators:** Sonika Janagill (Series Lead, Google track), with Rajani Rao (Founder/Director WCC, Microsoft track) following up each session with a companion piece mapping the same patterns to Agent Framework and Foundry
 
-> **Note:** All concepts and use cases work across platforms. We'll show GCP/Gemini examples, but you can adapt to your preferred stack.
+**Live builds run on:** Antigravity (IDE + CLI), Claude Code, Google ADK
 
-### Why GCP/Vertex AI?
+### The run
 
-✅ Generous free tier with $300 credits for new users  
-✅ Integrated ML platform (Vertex AI)  
-✅ Gemini models (competitive with GPT-4/Claude)  
-✅ Strong community support  
-✅ Great for production deployments
+| # | Session | Level |
+|---|---------|-------|
+| 1 | [Build Your Own Agent Skill](sessions/session-01-agent-skill/) | Entry-level friendly |
+| 2 | [Tools & Boundaries: MCP, Plugins, Permissions, Hooks](sessions/session-02-tools-boundaries/) | All levels |
+| 3 | [Small Models in Practice](sessions/session-03-small-models/) | All levels |
+| 4 | [Sub-Agents & Specialisation](sessions/session-04-sub-agents/) | Intermediate |
+| 5 | [AI in the SDLC & CI/CD](sessions/session-05-sdlc-cicd/) | Intermediate |
+| 6 | [Loop Engineering + Demo Day](sessions/session-06-loop-engineering/) | Advanced, community showcase |
 
----
+Dates are confirmed session by session in [#ai-learning-series](https://womencodingcommunity.slack.com/archives/C09L9C3FJP7) and on [Meetup](https://www.meetup.com/women-coding-community/).
 
-## 📚 Foundational Track (6 Sessions)
+### Setup
 
-### Session 1: AI Fundamentals & LLM APIs
+Each session has its own quick setup guide, posted the week before in Slack, so live time stays for building. General prerequisites:
 
-**Date:** November 5, 2025  
-**Instructor:** Sonika
+- Some Python
+- A Google Cloud account (free tier is fine) or an LLM API key
+- Antigravity (IDE + CLI) and Claude Code installed
+- Google ADK installed locally
 
-**Learning Objectives:**
+See [`getting-started/`](getting-started/) for the detailed guides.
 
-- Understand AI, ML, and LLM concepts
-- Set up GCP/Vertex AI and get API credentials
-- Make your first API call to Gemini
-- Build a basic chatbot with conversation memory
-- Handle API responses and errors
+### How each session works (60 min)
 
-**What We'll Build:** A simple but functional chatbot with Gemini API integration, conversation history, basic error handling, and a simple web interface.
-
-**WCC Use Case Options:**
-
-- **WCC Info Bot (Community Assistant)** - Chatbot that answers FAQs about WCC with personality
-- **Problem:** New members ask repetitive questions about WCC events, membership, volunteering
-- **Tech:** Gemini API, conversation memory, system prompts
-- **Bonus:** Add web scraping to pull latest info from WCC website
+1. Welcome & recap (5 min)
+2. Concept framing (10 min)
+3. Live build (30 min), real code, real tools, debug in the open
+4. Participant activity / steal-this pattern (10 min)
+5. Q&A + next-session teaser (5 min)
 
 ---
 
 ## 📁 Repository Structure
 
-```text
+```
 ai-learning-series/
 ├── README.md                          # This file
+├── STRUCTURE.md                       # Detailed structure notes
 ├── getting-started/                   # Setup guides
-│   ├── gcp-setup.md
-│   ├── vertex-ai-quickstart.md
-│   ├── python-environment.md
-│   └── alternative-platforms.md
 ├── sessions/
-│   ├── session-01-ai-chatbots/
-│   │   ├── slides.pdf
-│   │   ├── live-demo/                 # Code from live session
+│   ├── session-01-agent-skill/
+│   │   ├── live-demo/                 # Code from the live session
 │   │   ├── starter-template/          # Template for participants
-│   │   ├── use-case-guides/           # Detailed guides for each use case
 │   │   └── participants/              # Participant submissions
-│   │       ├── username1/
-│   │       │   ├── code/
-│   │       │   ├── README.md
-│   │       │   └── demo.mp4
-│   │       └── username2/
-│   ├── session-02-prompt-security/
-│   └── ...
-├── resources/
-│   ├── gcp-vertex-ai-cheatsheet.md
-│   ├── prompt-engineering-guide.md
-│   ├── security-checklist.md
-│   ├── troubleshooting.md
-│   └── reading-list.md
-└── badges/
-    ├── badge-criteria.md
-    └── badge-images/
+│   ├── session-02-tools-boundaries/
+│   ├── session-03-small-models/
+│   ├── session-04-sub-agents/
+│   ├── session-05-sdlc-cicd/
+│   └── session-06-loop-engineering/
+├── resources/                         # Cross-session reference material
+├── utilities/                         # Shared scripts/helpers
+└── badges/                            # Participation badge criteria
 ```
 
 ---
@@ -112,7 +81,7 @@ ai-learning-series/
 
 ### For Instructors
 
-1. Review the session materials in `/sessions/session-01-ai-chatbots/`
+1. Review the session materials in `/sessions/session-0X-.../`
 2. Check `/getting-started/` for setup guides
 3. Use `/resources/` for reference materials
 
@@ -126,27 +95,16 @@ ai-learning-series/
 
 ---
 
-## 📖 Getting Started
-
-- [GCP Setup Guide](./getting-started/gcp-setup.md)
-- [Vertex AI Quickstart](./getting-started/vertex-ai-quickstart.md)
-- [Python Environment Setup](./getting-started/python-environment.md)
-- [Alternative Platforms](./getting-started/alternative-platforms.md)
-
----
-
 ## 🎓 Facilitators
 
-- **Sonika** - Foundational Track Lead
-- **Sonali** - Advanced Track Lead
+- **Sonika Janagill** - Series Lead, Google track
+- **Rajani Rao** - Founder/Director WCC, Microsoft track (companion piece)
 
 ---
 
 ## 📝 License
 
 This project is open source and available under the MIT License.
-
----
 
 ## 🤝 Contributing
 
@@ -158,5 +116,41 @@ We welcome contributions! Please:
 
 ---
 
-**Last Updated:** November 2025  
-**Next Update:** After Session 1 (November 5, 2025)
+<details>
+<summary><strong>📚 2025 Series (Archived)</strong>, click to expand</summary>
+
+# Women Coding Community - AI Learning Series 2025
+
+Hands-on resources, code templates, and project guides for the original 12-week AI learning program.
+
+## 🎯 Program Overview
+
+**Format:** 12 sessions total (6 Foundational + 6 Advanced)
+**Duration:** 60 minutes each
+**Schedule:** Every other Wednesday, starting November 5th, 2025
+**Target Audience:** Coders with no/basic AI knowledge
+**Delivery:** Hands-on, project-based learning
+**Certification:** GitHub-tracked participation badges
+
+### Timeline
+
+- **Foundational Track:** Nov 5 - Dec 10 (6 weeks)
+- **Break:** Last week of January (feedback & planning)
+- **Advanced Track:** Jan 14 - Feb 18 (planned, never delivered)
+
+## 🛠️ Tech Stack
+
+**Primary Stack:** Python 3.11+, Google Cloud Platform (GCP), Vertex AI / Gemini API, Jupyter Notebooks, VS Code, Google Colab
+
+**Alternative Options:** AWS (Bedrock, SageMaker), Azure (OpenAI Service), OpenAI GPT, Anthropic Claude
+
+## 🎓 Facilitators
+
+- **Sonika** - Foundational Track Lead
+- **Sonali** - Advanced Track Lead
+
+See the original session folders under `/sessions/` (`session-01-ai-chatbots` through `session-06-deploy-agent`) for full learning objectives, use cases, and participant submissions from the 2025 run. The series restarts in 2026 as **The Harness Series** above, rather than picking up the planned Advanced Track.
+
+**Last Updated:** November 2025
+
+</details>

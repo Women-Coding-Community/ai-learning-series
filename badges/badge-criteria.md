@@ -8,6 +8,32 @@ Participants earn badges by completing sessions and projects. Badges are tracked
 
 ### 🏆 Participation Badges
 
+#### **Harness Series Badge (2026)**
+
+🛠️ **Harness Complete** - All 6 sessions + a working harness you keep
+
+**Earn by completing:**
+
+- ✅ All 6 Harness Series sessions (live or recording): Agent Skill, Tools & Boundaries, Small Models, Sub-Agents, SDLC & CI/CD, Loop Engineering
+- ✅ Submit working artifacts to GitHub for at least 3 sessions (e.g. `AGENTS.md`/`SKILL.md`, MCP + hook config, a model endpoint, a sub-agent split, a CI check, a scheduled loop)
+- ✅ By the end of Session 6, have one end-to-end harness: a skill, scoped tools, a model, and at least one automated check or loop, all working together
+- ✅ Write a README for your harness with:
+  - What you built
+  - How to run it
+  - What you learned
+  - Challenges faced
+  - Future improvements
+- ✅ Review at least 1 peer submission (provide constructive feedback)
+
+**Submit to:** `sessions/session-0X-.../participants/[your-username]/`
+
+---
+
+### 📚 2025 Series Badges (Archived)
+
+<details>
+<summary>Foundational Track Badge and Advanced Track Badge (2025 program), click to expand</summary>
+
 #### **Foundational Track Badge**
 
 🏆 **Foundational Complete** - All 6 sessions + at least 2 projects deployed
@@ -31,7 +57,9 @@ Participants earn badges by completing sessions and projects. Badges are tracked
 
 💎 **Advanced Complete** - All 12 sessions + integrated platform
 
-**Earn by completing:**
+The Advanced Track from the original 2025 plan was never delivered; the series restarts in 2026 as the Harness Series above instead of picking this plan back up. Kept here for historical reference.
+
+**Would have been earned by completing:**
 
 - ✅ All 6 foundational sessions + all 6 advanced sessions
 - ✅ Submit working code to GitHub for at least 3 advanced sessions
@@ -43,6 +71,8 @@ Participants earn badges by completing sessions and projects. Badges are tracked
   - Performance metrics
   - Lessons learned
 - ✅ Review at least 2 peer submissions (provide feedback)
+
+</details>
 
 ---
 
@@ -67,8 +97,8 @@ Participants earn badges by completing sessions and projects. Badges are tracked
 ### Step 1: Create Your Folder
 
 ```bash
-mkdir -p sessions/session-01-ai-chatbots/participants/[your-username]
-cd sessions/session-01-ai-chatbots/participants/[your-username]
+mkdir -p sessions/session-01-agent-skill/participants/[your-username]
+cd sessions/session-01-agent-skill/participants/[your-username]
 ```
 
 ### Step 2: Add Your Files
@@ -173,7 +203,33 @@ A: Forever! They're part of your learning journey.
 
 ## Timeline
 
-### Foundational Track (6 Sessions)
+### Harness Series (2026, 6 Sessions)
+
+| Session | Date | Topic |
+|---------|------|-------|
+| 1 | TBC | From Prompts to Harness: Build Your Own Agent Skill |
+| 2 | TBC | Tools & Boundaries: MCP, Plugins, Permissions, Hooks |
+| 3 | TBC | Small Models in Practice |
+| 4 | TBC | Sub-Agents & Specialisation |
+| 5 | TBC | AI in the SDLC & CI/CD |
+| 6 | TBC | Loop Engineering + Demo Day |
+
+Dates lock to the 3rd Tuesday of every month once the first date is confirmed in [#ai-learning-series](https://womencodingcommunity.slack.com/archives/C09L9C3FJP7) and on [Meetup](https://www.meetup.com/women-coding-community/).
+
+**Harness Series Badge:** Complete all 6 sessions + submit 3+ artifacts, deadline set after Session 6 wraps.
+
+### Community Champion
+
+**Ongoing:** Help peers, contribute to projects, share learnings throughout the program
+
+---
+
+### 📚 2025 Timeline (Archived)
+
+<details>
+<summary>Foundational Track and planned Advanced Track dates, click to expand</summary>
+
+#### Foundational Track (6 Sessions)
 
 | Session | Date | Topic | Submission Deadline |
 |---------|------|-------|---------------------|
@@ -186,9 +242,7 @@ A: Forever! They're part of your learning journey.
 
 **Foundational Track Badge:** Complete all 6 sessions + submit 2+ projects by Feb 4
 
-### Advanced Track (6 Sessions)
-
-**Advanced Track Badge:** Dates TBC
+#### Advanced Track (6 Sessions, never delivered)
 
 | Session | Date | Topic | Submission Deadline |
 |---------|------|-------|---------------------|
@@ -199,9 +253,7 @@ A: Forever! They're part of your learning journey.
 | 11 | TBC | Performance Optimization | TBC |
 | 12 | TBC | Capstone Project | TBC |
 
-### Community Champion
-
-**Ongoing:** Help peers, contribute to projects, share learnings throughout the program
+</details>
 
 ---
 
