@@ -2,6 +2,8 @@
 
 Welcome! This folder contains everything you need to set up your environment and get ready for the AI learning sessions.
 
+> **2026: The Harness Series.** This year's live builds run on **Antigravity (IDE + CLI)**, **Claude Code**, and **Google ADK**, on top of the same GCP/Gemini foundation below. A pinned setup post goes up in [#ai-learning-series](https://womencodingcommunity.slack.com/archives/C09L9C3FJP7) about a week before Session 1, with a quick refresh ahead of Session 2. See [Tooling for 2026](#-tooling-for-2026-antigravity-claude-code-adk) below for what to install alongside the steps in this guide.
+
 ## 📦 One-Command Setup
 
 ### Step 1: Create `.env` File
@@ -221,6 +223,42 @@ Before Session 1, make sure you have:
 - [ ] **API Key Configured** - In `.env` file or environment variables
 - [ ] **Test Script Passed** - Successfully called the API
 - [ ] **IDE Set Up** - VS Code, PyCharm, or your preferred editor
+- [ ] **Antigravity installed** - IDE + CLI, signed in
+- [ ] **Claude Code installed** - CLI, signed in
+- [ ] **Google ADK installed** - `pip install google-adk` (or per current ADK docs)
+- [ ] **A clean local sandbox or repo** - somewhere you're happy for an agent to make changes
+
+This is the "5-minute you're ready" checklist referenced in each session's setup post — if every box is ticked, you're set for the live build.
+
+---
+
+## 🛠️ Tooling for 2026: Antigravity, Claude Code, ADK
+
+The Harness Series builds on top of the GCP/Gemini setup above, with three more tools layered in:
+
+### Antigravity (IDE + CLI)
+
+Google's agentic IDE and CLI. Used for Session 1's `AGENTS.md` / `SKILL.md` walkthrough and every live build after it.
+
+- Install the IDE and CLI from the official Antigravity docs
+- Sign in with the same Google account/project as your Vertex AI setup where relevant
+- Verify with `antigravity --version` (or the current CLI entrypoint) in your terminal
+
+### Claude Code
+
+Anthropic's CLI coding agent. Sessions run the same skills across Antigravity and Claude Code to show portability.
+
+- Install via `npm install -g @anthropic-ai/claude-code` (or the current install method — check [claude.com/claude-code](https://claude.com/claude-code))
+- Sign in and confirm with `claude --version`
+
+### Google ADK
+
+The Agent Development Kit, used from Session 1 onward to show that what you build travels into agent frameworks, not just chat tools.
+
+- Install locally per the [ADK documentation](https://google.github.io/adk-docs/)
+- Confirm your GCP project has the necessary APIs enabled (same project as your Vertex AI setup)
+
+> **Stuck on any of these?** Ask in [#ai-learning-series](https://womencodingcommunity.slack.com/archives/C09L9C3FJP7) — each week's setup post covers the exact versions and gotchas for that month's session.
 
 ---
 
@@ -317,10 +355,10 @@ pip install google-generativeai
 
 Once you've completed setup:
 
-1. **Review the Starter Template** → `sessions/session-01-ai-chatbots/starter-template/`
-2. **Watch the Live Demo** → `sessions/session-01-ai-chatbots/live-demo/`
+1. **Review the Starter Template** → `sessions/session-01-agent-skill/starter-template/`
+2. **Watch the Live Demo** → `sessions/session-01-agent-skill/live-demo/`
 3. **Read the Resources** → `resources/prompt-engineering-guide.md`
-4. **Attend Session 1** → November 5, 2025
+4. **Attend Session 1** → From Prompts to Harness: Build Your Own Agent Skill (date TBC, see [#ai-learning-series](https://womencodingcommunity.slack.com/archives/C09L9C3FJP7))
 
 ---
 
