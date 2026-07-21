@@ -136,7 +136,7 @@ Replace `YOUR_PROJECT_ID` with your actual project ID (found in the Cloud Consol
 
 - [Vertex AI Quickstart](./vertex-ai-quickstart.md)
 - [Python Environment Setup](./python-environment.md)
-- Start with [Session 1: AI Chatbots](../sessions/session-01-ai-chatbots/)
+- Start with [Session 1: Build Your Own Agent Skill](../sessions/session-01-agent-skill/)
 
 ---
 

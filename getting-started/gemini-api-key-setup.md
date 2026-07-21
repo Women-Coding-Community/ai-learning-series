@@ -344,7 +344,7 @@ Now that you have your API key set up:
 
 1. ✅ Complete [Python Environment Setup](./python-environment.md)
 2. ✅ Try [Vertex AI Quickstart](./vertex-ai-quickstart.md)
-3. ✅ Build the [Session 1 Chatbot](../sessions/session-01-ai-chatbots/starter-template/)
+3. ✅ Build [Session 1's Agent Skill](../sessions/session-01-agent-skill/starter-template/)
 
 ---
 

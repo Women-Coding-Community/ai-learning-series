@@ -125,7 +125,7 @@ except Exception as e:
 
 ## Next Steps
 
-- [Build a Chatbot with Memory](../sessions/session-01-ai-chatbots/starter-template/)
+- [Session 1: Build Your Own Agent Skill](../sessions/session-01-agent-skill/starter-template/)
 - [Prompt Engineering Guide](../resources/prompt-engineering-guide.md)
 - [Security Checklist](../resources/security-checklist.md)
 
