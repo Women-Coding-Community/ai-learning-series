@@ -65,6 +65,41 @@ Ties the two sessions together, which is worth spelling out explicitly since it'
 
 Concretely, in the `social-spark` project: a "write a WCC-voice LinkedIn post" Skill from Session 1's pattern would sit next to this LinkedIn MCP server. The Skill decides *what to write and how*; the MCP server is the only thing that can actually *publish* it; `DRY_RUN` plus an `ask` permission tier decide *whether it's allowed to, right now*. All three layers, one agent.
 
+## The MCP configuration space: how many ways to wire one up
+
+Worth naming explicitly, since it looks like one skill ("configure an MCP server") but is
+really four independent decisions — and most people's IDEs (Antigravity, Claude Code,
+Claude Desktop, VS Code) already have several MCP servers configured, each mixing these
+differently without it being obvious:
+
+1. **Transport** — how the client talks to the process:
+   - **stdio** — client spawns a local process, talks over its stdin/stdout. `linkedin_server.py` tonight.
+   - **Streamable HTTP** — client hits a URL. Current standard for remote/hosted servers.
+   - **SSE** — the deprecated predecessor to Streamable HTTP, still seen in older configs.
+
+2. **Runtime / packaging** — what actually gets executed:
+   - **Your own script directly** — `command: uv/python/node`, `args: path/to/script`.
+   - **npx/uvx-launched package** — `command: npx`, `args: ["-y", "@some/mcp-package"]`. Ephemeral, no local install step — most copy-paste "install this MCP server" instructions are this shape.
+   - **Docker container** — `command: docker`, `args: ["run", "--rm", "-i", "image:tag"]`. Still stdio underneath; Docker just isolates the runtime/deps instead of `uv`/`npx` resolving them.
+   - **Already-running remote service** — just a `serverUrl`. Nothing local to spawn; someone else owns its uptime.
+
+3. **Auth** — orthogonal to both of the above:
+   - **None** — trusted local process, no credential needed.
+   - **Static token/API key** — a secret in `env` (stdio) or an `Authorization` header (HTTP), like `LINKEDIN_ACCESS_TOKEN` tonight. Fetched/pasted once; the client never manages it.
+   - **OAuth** — for HTTP servers advertising OAuth metadata, the *client itself* runs the authorization-code flow: pops a browser login, catches the callback, stores and refreshes the token. This is what a server "being OAuth" in your IDE means — you clicked Connect and approved in a browser, never touched a token value.
+
+4. **Config scope** — where the declaration lives:
+   - **Global/user-level** — e.g. `~/.gemini/config/mcp_config.json` (Antigravity), applies to every project you open.
+   - **Project/workspace-scoped** — `.agents/mcp_config.json` or `.mcp.json`, checked into one repo. The "work tools never leak into hobby projects" pattern this session is built around.
+   - **Imperative/CLI-registered** — e.g. `claude mcp add --transport http <name> <url>`, writes the config for you instead of hand-editing JSON.
+
+`linkedin_server.py` tonight sits at one specific point in that space: **stdio + your own
+script + static token via env + project-scoped**. A Docker-packaged internal tool is
+typically **stdio + container + token-or-none + global**; a SaaS integration (Jira,
+GitLab, Gmail) is typically **Streamable HTTP + remote service + OAuth + global**. Same
+four axes, different combination every time — that's the thing to say out loud in the
+room, since "configure an MCP server" sounds like one thing and isn't.
+
 ## Steal This
 
 Project-scoped MCP, governance by default. Also worth stealing: a `DRY_RUN`-style flag baked into any tool with real-world side effects, checked in code, not just described in a prompt.
