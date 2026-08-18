@@ -13,6 +13,14 @@ The kick-off. Every session in this series builds one more piece of an agent's h
 - Run the same skill across surfaces: Antigravity IDE, Antigravity CLI, Claude Code
 - Show that an Antigravity CLI skill is, in effect, skills for Google ADK, so what we write here travels into agent frameworks too
 
+### Skill built live in this session
+
+[`live-demo/accessibility-report/`](live-demo/accessibility-report/) is the actual `SKILL.md` demoed live: audits a URL for accessibility issues against WCAG 2.2 using Chrome and Lighthouse, writes both a Markdown and an interactive HTML report, and files a GitHub issue for any critical failures. Use it as a worked example of a real, non-trivial skill, not just the starter template, when you're writing your own.
+
+### Another example: a reference skill, not a task skill
+
+Not every skill is a step-by-step task like the one above. [`../../.agents/skills/wcc-branding/`](../../.agents/skills/wcc-branding/) is a different shape: a brand/style reference skill that applies WCC's Harness Series colour palette, tone of voice and writing conventions to anything generated for this repo or its channels. Worth a look for how a skill can encode "house style" rather than a procedure.
+
 ## Steal This
 
 The "onboard the agent like a new joiner" pattern.
@@ -25,12 +33,16 @@ One portable skill you own, working in more than one tool.
 
 ```
 session-01-agent-skill/
-├── live-demo/           # AGENTS.md and SKILL.md built live in the session
+├── live-demo/                       # Built live in the session
+│   └── accessibility-report/
+│       └── SKILL.md                 # WCAG 2.2 audit skill, Chrome + Lighthouse, MD/HTML reports, files GitHub issues
 ├── starter-template/    # AGENTS.md and SKILL.md templates to fill in — see its README
 │   ├── AGENTS.md
 │   └── skill-template/SKILL.md
 └── participants/        # Submit your own version here (see badges/badge-criteria.md)
 ```
+
+See also [`.agents/skills/wcc-branding/`](../../.agents/skills/wcc-branding/) at the repo root, a reference/style skill rather than a task skill, worth comparing against `accessibility-report` to see the difference in shape.
 
 ## Setup
 
