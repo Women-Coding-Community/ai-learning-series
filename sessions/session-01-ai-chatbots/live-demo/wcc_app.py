@@ -30,7 +30,7 @@ except Exception:
     pass
 
 # Configure Gemini API (done once at startup)
-api_key = os.getenv('GEMINI_API_KEY') or os.getenv("GOOGLE_API_KEY")
+api_key = os.getenv('API_KEY') or os.getenv("API_KEY")
 if api_key:
     genai.configure(api_key=api_key)
     print(f"✓ API configured: {bool(api_key)}")
@@ -372,16 +372,16 @@ if __name__ == "__main__":
     # Each step builds on the previous one, showing clear code differences!
     
     # Step 1: Basic API integration with Gemini
-    # step_1_basic_api_call()
+    step_1_basic_api_call()
     
     # Step 2: AI personality with system prompts
-    # step_2_add_personality()
+    step_2_add_personality()
     
     # Step 3: Conversation memory management
-    # step_3_conversation_memory()
+    step_3_conversation_memory()
     
     # Step 4: Model parameter experimentation
-    # step_4_model_parameters()
+    step_4_model_parameters()
     
     # Step 5: Web interface with Streamlit (with personality + conversation history)
     step_5_streamlit_interface()  # Run with: streamlit run wcc_app.py
