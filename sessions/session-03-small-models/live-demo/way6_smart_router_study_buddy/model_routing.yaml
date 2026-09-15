@@ -1,0 +1,30 @@
+# Two independent routing axes:
+#
+# 1. `environments:` below picks the *default* tutor for an ordinary
+#    question, based on where this is running.
+# 2. `complexity.py` can still escalate a single question to the frontier
+#    tutor regardless of environment -- except once an environment's own
+#    default is already frontier, where escalation is a visible no-op: it's
+#    already there. Same rule everywhere, "a genuinely hard question always
+#    gets the frontier model", dev just has further to travel to reach it.
+default_env: dev
+
+environments:
+  dev:
+    default: local
+    description: "Free/low-cost, small model answers by default, escalates on complexity"
+  staging:
+    default: frontier
+    description: "Locks onto the real frontier model, the one prod will use, no cheaper stand-in"
+  prod:
+    default: frontier
+    description: "Production, always the hosted frontier model, no local dependency"
+
+backends:
+  local:
+    kind: ollama
+    model: ollama_chat/gemma4:e4b
+    base_url: http://localhost:11434
+  frontier:
+    kind: gemini
+    model: gemini-3-flash-preview
