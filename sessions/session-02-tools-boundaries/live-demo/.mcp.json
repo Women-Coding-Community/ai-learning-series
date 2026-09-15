@@ -1,0 +1,12 @@
+{
+  "mcpServers": {
+    "linkedin": {
+      "command": "uv",
+      "args": ["run", "mcp/linkedin_server.py"],
+      "env": {
+        "LINKEDIN_ACCESS_TOKEN": "${LINKEDIN_ACCESS_TOKEN}",
+        "DRY_RUN": "true"
+      }
+    }
+  }
+}
