@@ -210,3 +210,6 @@ chroma_data/
 # Local reference files, not for check-in
 WCC-Harness-files/
 .DS_Store
+
+# ADK 
+.adk/
