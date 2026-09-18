@@ -19,7 +19,7 @@ import os
 import google.generativeai as genai
 from datetime import datetime
 
-
+#this sets the model to gemini 2.5
 MODEL_ID = 'gemini-2.5-flash-lite'
 
 # Load .env if available (dev convenience)
@@ -30,8 +30,9 @@ except Exception:
     pass
 
 # Configure Gemini API (done once at startup)
-api_key = os.getenv('GEMINI_API_KEY') or 'your-gemini-api-key-here'
+api_key = os.getenv('API_KEY') or "API_KEY"
 genai.configure(api_key=api_key)
+
 
 print("🚀 WCC AI Learning Series - Session 1 Demo")
 print("=" * 50)
@@ -146,25 +147,34 @@ def step_3_conversation_memory():
     print("STEP 3: Adding Conversation Memory")
     print("=" * 60)
     
+    #defines the new class
     class WCCChatBot:
         """Chatbot with conversation memory"""
-        
+        #the init is the constructor, which is the first thing that runs, whenver a new object is created
         def __init__(self):
+            #self.variable name is an instance variable, unique data that only belongs to one object
+            #creates the brain of the chatbot and saves it inside self.model
             self.model = genai.GenerativeModel(
+                #includes the model's ID
                 MODEL_ID,
+                #the system prompt needed to instruct the model on what to do
                 system_instruction=WCC_SYSTEM_PROMPT
             )
+            #this instance variable creates an empty list, this will act as the memory 
             self.conversation_history = []
-        
+        #the chat method, is an instance method, a function that the object can perform
+        # is must take self as the first argument, then user input as the second variable
         def chat(self, user_input):
             """Send message and get response with context"""
+            # this updates the memory with the user input
             # Add user message to history
             self.conversation_history.append({"role": "user", "parts": [user_input]})
-            
+            # creates an instance variable that passes the history to the model to generate a response
             # Generate response with full history
             response = self.model.generate_content(self.conversation_history)
             
-            # Add assistant response to history
+            # the response is then added to the model's history
+            # Add assistant response to history, role indicates who said the message, parts indicates the context
             self.conversation_history.append({"role": "model", "parts": [response.text]})
             
             return response.text
@@ -230,6 +240,7 @@ def step_4_model_parameters():
         generation_config = genai.types.GenerationConfig(
             temperature=temp,
             max_output_tokens=100,
+            top_p=0.9
         )
         
         model_temp = genai.GenerativeModel(
@@ -364,13 +375,14 @@ if __name__ == "__main__":
     step_1_basic_api_call()
     
     # Step 2: AI personality with system prompts
-    # step_2_add_personality()
+    step_2_add_personality()
+
     
     # Step 3: Conversation memory management
-    # step_3_conversation_memory()
+    step_3_conversation_memory()
     
     # Step 4: Model parameter experimentation
-    # step_4_model_parameters()
+    step_4_model_parameters()
     
     # Step 5: Web interface with Streamlit
-    # step_5_streamlit_interface()  # Run with: streamlit run wcc_demo.py
+    step_5_streamlit_interface()  # Run with: streamlit run wcc_demo.py
