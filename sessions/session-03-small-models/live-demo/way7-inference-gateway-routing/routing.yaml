@@ -1,0 +1,43 @@
+# Real gateway-native routing config for the Inference Gateway
+# (https://github.com/inference-gateway/inference-gateway), pointed at this
+# session's own backends instead of the project's own example providers.
+#
+# Enable with:
+#   ROUTING_ENABLED=true
+#   ROUTING_CONFIG_PATH=/etc/inference-gateway/routing.yaml
+#
+# Each top-level key under `models` is a logical alias a client requests as
+# the `model` field, e.g. {"model": "poc-tutor"}. The gateway resolves it to
+# one of the alias's deployments and forwards to that provider/model. This
+# file only has one deployment per alias below, so there's nothing to rotate,
+# the alias is doing pure indirection: the caller names an intent ("the POC
+# tutor model"), not a specific provider.
+models:
+  # Way 1/2's local Ollama, whichever way it's running, same port either way.
+  poc-tutor:
+    deployments:
+      - provider: ollama
+        model: gemma4:e4b
+
+  # Way 3's Ollama Cloud, no local GPU involved.
+  cloud-tutor:
+    deployments:
+      - provider: ollama-cloud
+        model: gemma4:cloud
+
+  # Way 4's territory, hosted Gemini, what prod actually calls.
+  prod-tutor:
+    deployments:
+      - provider: google
+        model: gemini-3-flash-preview
+
+  # Bonus: a pool with two interchangeable deployments, this is what
+  # round-robin is actually for, load-balancing/redundancy across providers
+  # that can both serve the same request, not complexity-aware routing.
+  resilient-tutor:
+    strategy: round_robin
+    deployments:
+      - provider: ollama
+        model: gemma4:e4b
+      - provider: ollama-cloud
+        model: gemma4:cloud

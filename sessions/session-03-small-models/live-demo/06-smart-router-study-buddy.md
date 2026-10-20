@@ -39,7 +39,7 @@ The whole thing is built on a single ADK `BaseAgent` subclass, `StudyBuddyRouter
 cd sessions/session-03-small-models/live-demo/way6_smart_router_study_buddy
 python3 -m venv .venv && source .venv/bin/activate
 pip install -r requirements.txt
-cp .env.example .env
+# cp .env.example .env
 # edit .env: set APP_ENV, and paste GOOGLE_API_KEY (or the Vertex block)
 ```
 

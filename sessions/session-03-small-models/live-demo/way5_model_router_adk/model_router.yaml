@@ -1,0 +1,40 @@
+# One agent (agent.py), four backends. Nothing in agent.py changes when you
+# switch — only this file, or a one-off MODEL_ROUTE env var override.
+#
+# Live demo flow, same prompt every time:
+#   local (your laptop) -> docker (share with the team) -> cloud (infra
+#   issues fallback, no local GPU) -> vertex_gemma (fixed traffic, fixed
+#   hourly cost, Way 4's deployed endpoint)
+default: local
+
+providers:
+  local:
+    description: "Way 1 - native Ollama on your own laptop, £0"
+    kind: ollama
+    model: ollama_chat/gemma4:e4b
+    base_url: http://localhost:11434
+
+  docker:
+    description: "Way 2 - Ollama in a container, so a teammate or CI runner gets the identical setup, £0"
+    kind: ollama
+    model: ollama_chat/gemma4:e4b
+    base_url: http://localhost:11434
+
+  cloud:
+    description: "Way 3 - Ollama Cloud, the fallback when local infra has issues, no GPU needed"
+    kind: ollama
+    model: ollama_chat/gemma4:cloud
+    base_url: https://ollama.com
+
+  vertex_gemma:
+    description: "Way 4 - Gemma 4 deployed on your own Vertex AI endpoint, fixed hourly cost for fixed traffic"
+    kind: vertex_endpoint
+    # From `gcloud ai endpoints list` after Way 4's deploy step, see
+    # ../04-gcp-fixed-cost.md. Fill these in before using this route, and
+    # verify the exact LiteLLM model string against your live endpoint,
+    # `vertex_ai/{ENDPOINT_ID}` is the documented pattern for a non-Gemini
+    # Model Garden deployment, but this has not been tested against a real
+    # deployed endpoint, only checked against LiteLLM's docs.
+    endpoint_id: "YOUR_ENDPOINT_ID"
+    vertex_project: "your-project-id"
+    vertex_location: "us-central1"
