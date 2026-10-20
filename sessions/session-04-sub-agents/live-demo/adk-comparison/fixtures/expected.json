@@ -1,0 +1,74 @@
+[
+  {
+    "id": "sec-hardcoded-secret",
+    "category": "security",
+    "file": "app/payments.py",
+    "keywords": [
+      "sk_test_FAKE_DO_NOT_USE",
+      "hardcoded",
+      "secret"
+    ],
+    "min_match": 2,
+    "evidence": "SECRET_KEY = \"sk_test_FAKE_DO_NOT_USE\""
+  },
+  {
+    "id": "sec-sql-injection",
+    "category": "security",
+    "file": "app/payments.py",
+    "keywords": [
+      "f-string",
+      "sql injection",
+      "parameteris"
+    ],
+    "min_match": 2,
+    "evidence": "query = f\"SELECT"
+  },
+  {
+    "id": "test-refund-rounding",
+    "category": "tests",
+    "file": "tests/output.log",
+    "keywords": [
+      "test_refund_rounding",
+      "rounding",
+      "999"
+    ],
+    "min_match": 2,
+    "evidence": "test_refund_rounding FAILED"
+  },
+  {
+    "id": "test-webhook-timeout",
+    "category": "tests",
+    "file": "tests/output.log",
+    "keywords": [
+      "test_webhook_retry",
+      "timeout",
+      "webhook"
+    ],
+    "min_match": 2,
+    "evidence": "test_webhook_retry FAILED"
+  },
+  {
+    "id": "docs-amount-units",
+    "category": "docs",
+    "file": "README.md",
+    "keywords": [
+      "pounds",
+      "amount_pence",
+      "pence"
+    ],
+    "min_match": 2,
+    "evidence": "Amount in pounds"
+  },
+  {
+    "id": "docs-retries-default",
+    "category": "docs",
+    "file": "README.md",
+    "keywords": [
+      "retries",
+      "re:\\b5\\b",
+      "re:\\b3\\b"
+    ],
+    "min_match": 3,
+    "evidence": "`retries` defaults to 5"
+  }
+]
