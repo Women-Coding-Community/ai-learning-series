@@ -1,0 +1,5 @@
+results/*
+!results/.gitkeep
+.venv/
+.env
+__pycache__/
