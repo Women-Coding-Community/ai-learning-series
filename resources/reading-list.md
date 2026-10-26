@@ -108,6 +108,10 @@
 
 ### Blogs & Newsletters
 
+- **[AI Weekly](https://aiweekly.co/)**
+  - Three-times-weekly coverage of models, agents, research, funding, and policy
+  - Ranked from what influential AI experts and organizations are reading and sharing
+
 - **[The Batch](https://www.deeplearning.ai/the-batch/)** - DeepLearning.AI
   - Weekly AI news and insights
   - Free newsletter
