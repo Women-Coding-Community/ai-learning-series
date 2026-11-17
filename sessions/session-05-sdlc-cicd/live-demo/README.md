@@ -2,7 +2,7 @@
 
 One review skill, run from GitHub Actions through the Antigravity SDK, posting one PR comment from a runner a rogue PR cannot abuse. Then a second skill on the same pipeline: a dependency audit that opens a draft PR and never merges.
 
-The timed walkthrough is in [DEMO-SCRIPT.md](DEMO-SCRIPT.md). This file is the answer key.
+This file is the answer key for the live demo.
 
 ## What is here
 
@@ -78,7 +78,7 @@ A good run finds the first two and at least one of the next two. Say so honestly
 
 ### Measured run, 16 November 2026
 
-One local run on Vertex AI (`ai-devcamp-sonika`, SDK default model), six findings, none dropped by validation:
+One local run on Vertex AI (a personal Google Cloud project, SDK default model), six findings, none dropped by validation:
 
 | Planted bug | Found | How the reviewer rated it |
 | --- | --- | --- |
@@ -174,7 +174,7 @@ On GitHub Actions, one script does the Google Cloud setup and sets the repo vari
 ./setup-vertex.sh <gcp-project-id> <owner>/<repo>
 ```
 
-It creates a Workload Identity pool and a provider that trusts only that repo, a `shipit-reviewer` service account with the Vertex AI User role, and four repo variables. It is safe to run twice, and it prints the commands to undo everything. Run on 16 November 2026 against `adk-devcamp-poc` and `sonikajanagill/shipit-ci-demo`.
+It creates a Workload Identity pool and a provider that trusts only that repo, a `shipit-reviewer` service account with the Vertex AI User role, and four repo variables. It is safe to run twice, and it prints the commands to undo everything. Run on 16 November 2026 against a personal Google Cloud project and a throwaway demo repo.
 
 What to know before choosing it for the session:
 
