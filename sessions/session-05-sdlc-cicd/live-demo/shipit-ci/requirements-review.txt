@@ -1,0 +1,2 @@
+# The AI reviewer only. Installed by the agent jobs, never by the app or the gates.
+google-antigravity==0.1.23

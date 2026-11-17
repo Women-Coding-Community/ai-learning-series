@@ -1,0 +1,7 @@
+findings.json
+comment.md
+audit.json
+audit.md
+__pycache__/
+.venv/
+*.db
