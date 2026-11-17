@@ -1,0 +1,5 @@
+# Explicit, so the gate is the same on every machine and on the runner.
+line-length = 110
+
+[lint]
+select = ["E4", "E7", "E9", "F"]

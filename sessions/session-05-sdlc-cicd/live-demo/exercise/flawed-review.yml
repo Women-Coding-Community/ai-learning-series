@@ -1,0 +1,30 @@
+# Your turn: this workflow "works", and it has three serious flaws.
+# Find them, fix them, and say what each one would have cost you.
+# Do not run this file on a real repo.
+name: AI review
+
+on:
+  pull_request_target:
+    types: [opened, synchronize]
+
+permissions: write-all
+
+jobs:
+  review:
+    runs-on: ubuntu-latest
+    env:
+      GEMINI_API_KEY: ${{ secrets.GEMINI_API_KEY }}
+    steps:
+      - uses: actions/checkout@v7
+        with:
+          ref: ${{ github.event.pull_request.head.sha }}
+
+      - run: pip install -r requirements-dev.txt google-antigravity
+
+      - name: Review "${{ github.event.pull_request.title }}"
+        run: |
+          echo "Reviewing: ${{ github.event.pull_request.title }}"
+          python scripts/review_and_fix.py --allow-shell --post-comment
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          BASE_SHA: ${{ github.event.pull_request.base.sha }}

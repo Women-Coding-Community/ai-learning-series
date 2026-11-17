@@ -1,0 +1,123 @@
+name: Dependency audit
+
+# Same pipeline shape as the review, different trigger, different skill.
+# It opens a draft PR and stops. It never merges.
+on:
+  schedule:
+    - cron: '0 7 * * 1' # Mondays 07:00 UTC
+  workflow_dispatch:
+
+permissions: {}
+
+concurrency:
+  group: dependency-audit
+  cancel-in-progress: true
+
+jobs:
+  # 1. A deterministic scanner finds the problems. No model.
+  scan:
+    runs-on: ubuntu-latest
+    timeout-minutes: 5
+    permissions:
+      contents: read
+    outputs:
+      vulnerable: ${{ steps.audit.outputs.vulnerable }}
+    steps:
+      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
+        with:
+          persist-credentials: false
+      - uses: actions/setup-python@6d4fd22b20465ccc0f7354476588e8df7c9ca0e0 # v7.1.0
+        with:
+          python-version: '3.12'
+      - run: python -m pip install pip-audit==2.10.1
+      - id: audit
+        run: |
+          if pip-audit -r requirements.txt --format json --output audit.json; then
+            echo "vulnerable=false" >> "$GITHUB_OUTPUT"
+          else
+            echo "vulnerable=true" >> "$GITHUB_OUTPUT"
+          fi
+      - uses: actions/upload-artifact@cf430e030ddbb5b0abf93d22962f4752f3646cd9 # v7.0.2
+        with:
+          name: audit
+          path: audit.json
+          retention-days: 7
+
+  # 2. The skill explains the risk. Read-only, no tools, no write token.
+  explain:
+    needs: scan
+    if: needs.scan.outputs.vulnerable == 'true'
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    environment: ai-review
+    permissions:
+      contents: read
+      id-token: write # only used by the optional Vertex AI route
+    steps:
+      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
+        with:
+          persist-credentials: false
+      - uses: actions/setup-python@6d4fd22b20465ccc0f7354476588e8df7c9ca0e0 # v7.1.0
+        with:
+          python-version: '3.12'
+      - run: python -m pip install -r requirements-review.txt
+      - uses: actions/download-artifact@9000827ccba6bdab643e8b6fd33ac0654aef8333 # v8.0.2
+        with:
+          name: audit
+      # Optional keyless route: set the repo variable WORKLOAD_IDENTITY_PROVIDER
+      # (plus GOOGLE_CLOUD_PROJECT) and the model call goes to Vertex AI with a
+      # short-lived token instead of an API key. Unset, this step is skipped.
+      - name: Authenticate to Google Cloud (Vertex AI route)
+        if: vars.WORKLOAD_IDENTITY_PROVIDER != ''
+        uses: google-github-actions/auth@7c6bc770dae815cd3e89ee6cdf493a5fab2cc093 # v3
+        with:
+          workload_identity_provider: ${{ vars.WORKLOAD_IDENTITY_PROVIDER }}
+          service_account: ${{ vars.VERTEX_SERVICE_ACCOUNT }}
+      - env:
+          GEMINI_API_KEY: ${{ secrets.GEMINI_API_KEY }}
+          GOOGLE_GENAI_USE_VERTEXAI: ${{ vars.WORKLOAD_IDENTITY_PROVIDER != '' && 'true' || '' }}
+          GOOGLE_CLOUD_PROJECT: ${{ vars.GOOGLE_CLOUD_PROJECT }}
+          GOOGLE_CLOUD_LOCATION: ${{ vars.GOOGLE_CLOUD_LOCATION || 'global' }}
+          REVIEW_MODEL_SMALL: ${{ vars.REVIEW_MODEL_SMALL }}
+        run: python scripts/audit.py explain audit.json > audit.md
+      - uses: actions/upload-artifact@cf430e030ddbb5b0abf93d22962f4752f3646cd9 # v7.0.2
+        with:
+          name: explanation
+          path: audit.md
+          retention-days: 7
+
+  # 3. Plain code bumps the pins and opens a DRAFT PR for a person.
+  #    Needs "Allow GitHub Actions to create and approve pull requests"
+  #    switched on under Settings > Actions > General.
+  draft-pr:
+    needs: explain
+    runs-on: ubuntu-latest
+    timeout-minutes: 5
+    permissions:
+      contents: write
+      pull-requests: write
+    steps:
+      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
+      - uses: actions/download-artifact@9000827ccba6bdab643e8b6fd33ac0654aef8333 # v8.0.2
+        with:
+          merge-multiple: true
+      - run: python3 scripts/audit.py bump audit.json requirements.txt
+      - name: Open the draft PR
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: |
+          if git diff --quiet -- requirements.txt; then
+            echo "No pinned package has a fix version. Nothing to propose."
+            exit 0
+          fi
+          branch="deps/audit-$(date -u +%Y-%m-%d)"
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git switch -c "$branch"
+          git add requirements.txt
+          git commit -m "Bump vulnerable dependencies"
+          git push --force origin "$branch"
+          gh label create needs-human --color B60205 --description "A person must review" 2>/dev/null || true
+          gh pr create --draft --label needs-human \
+            --title "Dependency audit: proposed upgrades" \
+            --body-file audit.md || gh pr edit "$branch" --body-file audit.md
